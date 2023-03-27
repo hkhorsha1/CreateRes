@@ -1,0 +1,2153 @@
+
+
+
+<!DOCTYPE html>
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+	 - New Reservation
+</title><link rel="stylesheet" type="text/css" href="/styles/PageLayout.css" /><link rel="stylesheet" type="text/css" href="/styles/FontStyles.css" /><link rel="stylesheet" type="text/css" href="/styles/PageStyles.css" /><link rel="stylesheet" type="text/css" href="/styles/HorizontalMenu.css" /><link rel="stylesheet" type="text/css" href="/styles/ColorStyles.css" /><link rel="Stylesheet" type="text/css" href="/Content/jquery-ui-1.12.1-custom.css" /><meta name="robots" content="noindex, nofollow" /><meta name="googlebot" content="noindex" /><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" /><meta http-equiv="Pragma" content="no-cache" /><meta http-equiv="Expires" content="0" /><meta name="format-detection" content="telephone=no" /><link href="/WebResource.axd?d=hUums-8_BczWSPTlKtHUrQtX-hHXIJ82vHTS8DT0ZlBPm483xCQjFxhL8r3xG5hirpRL9j3KA0UKtJXFy-qa4GBNS-y52KaMqOHz4mCncN4ODvYgseebBdU2J6i3Y2XgE0AGxCHXgK-JImisp3D73asiBTk1&amp;t=637255802400000000" type="text/css" rel="stylesheet" /><link href="/WebResource.axd?d=dBMa_cBueD1xlVLS9uwEJu0FURGopEEhEEcB5Xhv13oxGdG54S0ov6saAP-g28IcF9Rl3hU_6G3JfH-L7WSGUVHG5fKZYognHAMGXGgUbevOGHhPIdk4mQabIRJvs6EtM_ijOqqUv2hurQjM2s3IdVcwE0o1&amp;t=637255802400000000" type="text/css" rel="stylesheet" /></head>
+
+<body>
+    <script type="text/javascript" src="/Scripts/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery-ui-1.13.2.min.js"></script>
+    <script type="text/javascript" src="/Scripts/moment.js"></script>
+    <script type="text/javascript" src="/Scripts/moment-timezone-with-data.js"></script>
+
+    <script type="text/javascript">
+        var PageTimerSiteOverride = ('false' == 'true');
+        var PageTimerActive = false;
+        var PageTimerWindowActive = true;
+        var PageTimerMinute, PageTimerSecond;
+        var PageTimerMinuteOverride, PageTimerSecondOverride;
+        var cookieExpiration = 365;
+        var clicked = false;
+        var darkText = 'seashell';
+        var lightText = 'white';
+        var darkMode = false;
+
+        const mapStyles = {
+            light: [],
+            dark: [
+                { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+                { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+                { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+                {
+                    featureType: "administrative.locality",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#d59563" }],
+                },
+                {
+                    featureType: "poi",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#d59563" }],
+                },
+                {
+                    featureType: "poi.park",
+                    elementType: "geometry",
+                    stylers: [{ color: "#263c3f" }],
+                },
+                {
+                    featureType: "poi.park",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#6b9a76" }],
+                },
+                {
+                    featureType: "road",
+                    elementType: "geometry",
+                    stylers: [{ color: "#38414e" }],
+                },
+                {
+                    featureType: "road",
+                    elementType: "geometry.stroke",
+                    stylers: [{ color: "#212a37" }],
+                },
+                {
+                    featureType: "road",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#9ca5b3" }],
+                },
+                {
+                    featureType: "road.highway",
+                    elementType: "geometry",
+                    stylers: [{ color: "#746855" }],
+                },
+                {
+                    featureType: "road.highway",
+                    elementType: "geometry.stroke",
+                    stylers: [{ color: "#1f2835" }],
+                },
+                {
+                    featureType: "road.highway",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#f3d19c" }],
+                },
+                {
+                    featureType: "transit",
+                    elementType: "geometry",
+                    stylers: [{ color: "#2f3948" }],
+                },
+                {
+                    featureType: "transit.station",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#d59563" }],
+                },
+                {
+                    featureType: "water",
+                    elementType: "geometry",
+                    stylers: [{ color: "#17263c" }],
+                },
+                {
+                    featureType: "water",
+                    elementType: "labels.text.fill",
+                    stylers: [{ color: "#515c6d" }],
+                },
+                {
+                    featureType: "water",
+                    elementType: "labels.text.stroke",
+                    stylers: [{ color: "#17263c" }],
+                },
+            ],
+        };
+
+        $(window).on('keyup cut paste mousemove mouseup onchange input', function () {
+            if (PageTimerWindowActive) {
+                PageTimerResetTimeout();
+            }
+        });
+
+        $(window).focus(function () {
+            PageTimerWindowActive = true;
+        });
+
+        $(window).blur(function () {
+            PageTimerWindowActive = false;
+        });
+
+        $(document).ready(function () {
+            var masterPRM = Sys.WebForms.PageRequestManager.getInstance();
+            if (masterPRM != null) {
+                masterPRM.add_endRequest(masterEnd);
+            }
+
+            masterEnd();
+
+            //PageTimerInitTimeout();
+            ClockTimer();
+            setInterval(function () { ClockTimer(); }, 1000);
+            setInterval(function () { PageTimerCountDown(); }, 1000);
+            setCookie('Master', 'TZ', (moment.tz(new Date(), moment.tz.guess()).utcOffset() / 60).toString());
+        });
+
+        function masterEnd() {
+            PageTimerResetTimeout();
+
+            setColorMode(document.getElementById('buttonColorMode'));
+        }
+
+        function PageTimerInitTimeout() {
+            PageTimerStartTimeout();
+        }
+
+        function PageTimerStartTimeout() {
+            if (PageTimerActive === false) {
+                PageTimerResetTimeout();
+
+                if (PageTimerMinute >= 0) {
+                    PageTimerActive = true;
+                    PageTimerCountDown();
+                }
+            }
+        }
+
+        function PageTimerResetTimeout() {
+            if (PageTimerSiteOverride) {
+                PageTimerActive = false;
+
+                PageTimerMinute = -2;
+                PageTimerSecond = 0;
+
+                return;
+            }
+
+            if ((typeof PageTimerMinuteOverride == 'number') && (PageTimerMinuteOverride == -2)) {
+                PageTimerActive = false;
+
+                PageTimerMinute = -2;
+                PageTimerSecond = 0;
+
+                return;
+            }
+
+            if ((typeof PageTimerMinuteOverride == 'number') && (PageTimerMinuteOverride >= 0)) {
+                PageTimerMinute = PageTimerMinuteOverride;
+            } else {
+                PageTimerMinute = 5;
+            }
+
+            if ((typeof PageTimerSecondOverride == 'number') && (PageTimerSecondOverride >= 0)) {
+                PageTimerSecond = PageTimerSecondOverride;
+            } else {
+                PageTimerSecond = 0;
+            }
+
+            PageTimerActive = true;
+        }
+
+        function PageTimerCountDown() {
+            if (PageTimerActive) {
+                PageTimerSecond--;
+                if (PageTimerSecond == -1) {
+                    PageTimerSecond = 59;
+                    PageTimerMinute--;
+                }
+
+                var c = 'black';
+                if (PageTimerMinute == 0) {
+                    if (PageTimerSecond < 6) {
+                        c = 'red';
+                    } else if (PageTimerSecond < 15) {
+                        c = 'blue';
+                    }
+                }
+
+                $('#PageTimer').html('Timeout: <font style="color: ' + c + ';">' + PageTimerMinute + ':' + ((PageTimerSecond < 10) ? '0' : '') + PageTimerSecond + '</font>');
+                if ((PageTimerMinute <= 0) && (PageTimerSecond == 0)) {
+                    $('#PageTimer').html('');
+                    PageTimerActive = false;
+                    if (typeof PageTimerTrigger == 'function') {
+                        PageTimerTrigger();
+                    } else {
+                        window.location = "/Reservationstatus.aspx";
+                    }
+                } else if (PageTimerActive) {
+                    //setTimeout(PageTimerCountDown, 1000);
+                }
+            } else {
+                $('#PageTimer').html('');
+            }
+        }
+
+        function ClockTimer() {
+            var d = new Date();
+
+            $('#labelClock').html(d.toLocaleDateString() + ' ' + d.toLocaleTimeString() + ' ' + moment(d).tz(moment.tz.guess()).zoneAbbr());
+
+            //$('#ctl00_LabelResolution').html('[' + $(window).width() + 'x' + $(window).height() + ']');
+            $('#ctl00_LabelResolution').html('[' + window.innerWidth + 'x' + window.innerHeight + ']');
+        }
+
+        function setCookie(cookiePage, cookieName, cookieValue) {
+            var d = new Date();
+            d.setTime(d.getTime() + (cookieExpiration * 24 * 60 * 60 * 1000));
+
+            document.cookie = cookiePage + '_' + cookieName + '=' + cookieValue + ';expires=' + d.toUTCString() + ';path=/'; //name=value; expires=expireDays
+        }
+
+        function setCookieCheckbox(cookiePage, checkBox) {
+            setCookie(cookiePage, checkBox, document.getElementById(checkBox).checked ? 't' : 'f');
+        }
+
+        function setCookieTF(cookiePage, cookieName, cookieValue) {
+            setCookie(cookiePage, cookieName, cookieValue ? 't' : 'f');
+        }
+
+        function getCookie(cookiePage, cookieName) {
+            var name = cookiePage + '_' + cookieName + '=';
+            var cookieSplit = document.cookie.split(';');
+
+            for (var i = 0; i < cookieSplit.length; i++) {
+                var c = cookieSplit[i];
+                while (c.charAt(0) == ' ') c = c.substring(1);
+
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+
+            return null;
+        }
+
+        function getCookieTF(cookiePage, cookieName) {
+            var c = getCookie(cookiePage, cookieName);
+
+            if (c == 't') {
+                return true;
+            }
+
+            return false;
+        }
+
+        function clearCookie(cookiePage, cookieName) {
+            document.cookie = cookiePage + '_' + cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+        }
+
+        function changeColorMode(sender) {
+            darkMode = getCookieTF('Master', 'DarkMode');
+
+            darkMode = !darkMode;
+
+            setCookieTF('Master', 'DarkMode', darkMode);
+
+            setColorMode(sender);
+        }
+
+        function setColorMode(sender) {
+            darkMode = getCookieTF('Master', 'DarkMode');
+
+            if (darkMode) {
+                $('#pagecontent').css('background-color', 'darkgrey');
+                sender.textContent = 'D';
+                sender.title = 'Dark Mode';
+            } else {
+                $('#pagecontent').css('background-color', 'white');
+                sender.textContent = 'L';
+                sender.title = 'Light Mode';
+            }
+
+            if (typeof changeColors == 'function') {
+                changeColors();
+            }
+        }
+    </script>
+
+    <form name="aspnetForm" method="post" action="./Createres.aspx" onsubmit="javascript:return WebForm_OnSubmit();" id="aspnetForm">
+<div>
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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TU1VTklUWSBIT1MuLi4pBQQ0ODgwZxAFHzUwMCAoSGVhbHRoIERlcGFydG1lbnQgQWR1bC4uLikFAzUwMGcQBRo1MTAgKFJ5ZGVyIFRyYW5zcG9ydGF0aW9uKQUDNTEwZxAFHzUxMSAoUEcgRERTIEluZGVwZW5kZW50IExpdi4uLikFAzUxMWcQBRs1MTUwIChMYXcgT2ZmaWNlIG9mIFdhdHNvbikFBDUxNTBnEAUcNTIwIChDcmlzaXMgUmVzcG9uc2UgU3lzdGVtKQUDNTIwZxAFHzU0MCAoQnJlYXN0IGFuZCBDZXJ2aWNhbCBDYS4uLikFAzU0MGcQBR81NDUgKFByb2dyZXNzaXZlIExpZmUgQ2VudGUuLi4pBQM1NDVnEAUSNTc1IChBZHVsdCBIZWFsdGgpBQM1NzVnEAUXNjAwIChQcmlvcml0eSBQYXJ0bmVycykFAzYwMGcQBRU2MTQgKENhcmUgQ29ubmVjdGlvbikFAzYxNGcQBR82MTUgKE9sc2VuIExvZ2lzdGljYWwgTWFuYWcuLi4pBQM2MTVnEAUfNjI1IChSaWNoYXJkIEFsbGVuIENvbW11bml0Li4uKQUDNjI1ZxAFHzYzMCAoSW5zdGl0dXRlIGZvciBGYW1pbHkgQy4uLikFAzYzMGcQBRc2MzUgKE9wdGltYWwgVHJhbnNwb3J0KQUDNjM1ZxAFHzY1NiAoUmljaGFyZCBBbGxlbiBDb21tdW5pdC4uLikFAzY1NmcQBR82NzEwIChET0NUT1JTIENPTU1VTklUWSBSRUguLi4pBQQ2NzEwZxAFHzc1MTUgKEpvaG4ncyBIb3BraW5zIEhvc3BpdC4uLikFBDc1MTVnEAUfODEwMCAoRG9jdG9ycyBIb3NwaXRhbCBDYW5jLi4uKQUEODEwMGcQBRg4MTAwIChEb2N0b3IncyBIb3NwaXRhbCkFBDgxMDBnEAUfOTAwIChHZW9yZ2UgV2FzaGluZ3RvbiBVbml2Li4uKQUDOTAwZxAFFTk5OTkgKFRlc3QgQWNjb3VudCAxKQUEOTk5OWcQBRlQYXlQYWwgKFByZSBwYWlkIEFjY291bnQpBQZQYXlQYWxnEAUPUEdIRCAoUEdIZWFsdGgpBQRQR0hEZxAFH1BPT0xFRC1UUERDIChUcmFuc1BvcnREQy1Qby4uLikFC1BPT0xFRC1UUERDZxAFH1JBUFMgKFJlZ3VsYXRvcnkgQWZmYWlycyBQci4uLikFBFJBUFNnEAUUVFBEQyAoVHJhbnNwb3J0IERDICkFBFRQRENnEAUaVkFEQyAoREMgdmV0ZXJhbnMgUHJvZ3JhbSkFBFZBRENnEAUfV0FWIChXaGVlbGNoYWlyIEFjY2Vzc2libGUgLi4uKQUDV0FWZxYBZmQCKQ8PFgIfBQEWAGRkAgMPDxYCHwUBFwBkZAIED2QWAmYPZBYEAgEPDxYCHwUBGAAWAh4Lb25tb3VzZW92ZXIFD3NhdmVGb2N1cyh0aGlzKWQCAw8PFgIfBQEZAGRkAg8PDxYCHwEFE1RULVdTNF8yMjEwMTAxNDUyMTlkZAIRDw8WAh8BBVdDb3B5cmlnaHTCqSAyMDIyIFRheGlSaWRlIC0gVGF4aVJpZGUgaXMgYSByZWdpc3RlcmVkIHRyYWRlbWFyayBvZiBTcGVjaWFsIFN5c3RlbXMsIEluYy5kZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAQUfY3RsMDAkTWlkZGxlU2VjdGlvbiRDaGVja0JveFNNU/S6fnWgK54CJrBlm38KmBndx4ex" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=B-l43W_pFDSOigBnZeptYvMQ0_RtHF3Ouo1SmZSBRBkwFJ_w9VyxSI9tSsjy4w5oUcCFJyuWAv3fO2tiKuyICG7Z_s81&amp;t=638012529744972059" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=aVozzfJbx-uxCaN0tKjNtR5OFbgRgdcvePLpHd5d8awRtApnwlyYwMvpnFNqOQiVnsxpR5P3_0kqBGub_qN5dNJKSXXoai7cdKgLZ_4taqrMKTsJlz35nXKpz41ApnnUYihK-emQqrxOfVquuq2qA0_thm01&amp;t=125d5fef" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=NXeU6k3kjZBl9f-QwXkq8uMhyZkmZoYIFpSf49zTYCpzmmbbD_5sEb-xoiY3wuyIwZfZUtEYm6V8m2j8VVD1QJjyXrhtQ4dKDa44qPAlsd019YMRJtJJ9NdSLoDJxSoAJb7KcPH4URtj72GdEQxYpugfFx6LZ_9lfd_trM7_V-q-aJeG0&amp;t=ffffffffe6d5a9ac" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax client-side framework failed to load.');
+//]]>
+</script>
+
+<script src="/ScriptResource.axd?d=qNFvrS0OiduBn-P5BWKW3QdnOC8HvCIZyKVY5cUaukXvIYvEOodSCskPN8XyrgrGhDgRL-TgmfGKfoOtMbJ4zbBRIIoV6FxDm1qayJ4vpObypIDRI1cPFcjNEic6qtNOLosW7m_32k6wc-uZm2MgZ40QYto11J2b2jo3qXqgkMOyXUuS5mDRW1IZ6hMGmlhJDr4VWg2&amp;t=ffffffffe6d5a9ac" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=YB6kgxHlhNMKDiHbqge7vnV6_4ZKhdlQiPn0hwj18pwHEqNwRWicpmY4EiCy-YWqRlyv2e9dpnZ8ronAXEhNmTHJ2s-1TwF4X1hTfzPECRiqzq6Ap3ZiAUTa8yAGl26IAvAwrNuMibW2jsAkbTcltQm3tgU1&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=F92VO145bCjhph8WRMJ4ps8kkyt_L7KJdVecOwymyWAwShsgrQsTA-c-Z3WEMiYHqfyX195qsOXCU8CprstSA2SNDtHb9__WzVGSl8e0Cqv_Hpi_7KHVN_6dqqRyAPqhP8fvhg2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=DI4BOD5W_Hfz12pYFvf87lR7ECTu4xyEE2ftBkfaPlpH84TW0hx_Gjx5F9HYTFCP__nITaJHn3i7kqvVLhhAn2WJnVawRq8zrvWPlrSKzPSCnxXg4nDgvayJIw3m8AqER7XObg2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=oPkEhLGSvofPjB2DXlQNi2N3xqkrSRT-pt_MYxDEDOJPCFxHeDQC-6PWTdHJX5ZTUsbE12Iar_w7aoyzQsoUfvgjHs5-UY6FH4QhmCTFMVqBAFebxC5vswz1MTzEG7TlgO7bVg2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=lt9JhddyAX0oiJc3AKXCPdLl69H10C4cZjScvTLitdm313_Uo-rIx2ZrG_qomeIPUFQVSZ3aRAdEa4GQ_zfGsZaXn4dcoxA6NjMT4Tpg03XZw9M7z6jlJZ8qWFiluFQstmJ8Cg2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=_Ib_gjdRfZo90ePfoVj0bSBOHwJXLh-3HQTF1I8UuepODTzEzwkHMtoN_mtEAF8Dpmncp9UHPeILhPf8h6jwVQMyNPg5rfb-uu-RfBrtcTdc9wXhoQAq1I-mPnjGTGlnuO4WAg2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=s4_YrFxViZzRAcLRC1BpzMokQOprE1uwu6plrrIvGBcPJv5dRe2E6s7NyVmosS4rzw68pmGM5-7vVZtblk2YtRJJUu7jgoW28pyt_nowqo_gMsBSpi0jQ0cjhlAPfuQ0o7h0Iw2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=tK3cmOlybs9ZPFPKFIFY3i7Nz5w_7SqHENJ7pg5PypEUWK6769EKRjLFArksgLwpFqXRWtOPtDgIbe2gBJhDY4aUKjkMG7vCTwhnwn15QNzBpsGEq_covn3aHNuveHTNjBDk9A2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=IYMn-Rryk_TyDDdJsq08cQgwk8i-te3akHeuM9w1rR7t5N2CED2OfJ7OyDCf9xIo5uHOE4WgZvCmpOW6eOhazUVNlq7YFzFVGnRQrq_fVqo1ArOvm8WrbCzgPoTV0oxDOq2VzQ2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=Xfhx1J21GZtj5A2LUXYRUMiFwWnbDUu13Nh3kXEuEx9R73_J8iHXV2zoVF-yAw-IJTbsKqswQldf1jawJaSJ8STTBf4kGKe8nuoAlFDnFpSJ_jajy36Zjswuilsq0D7aIZyhQw2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=Wsdjjfm3QefH4Rq41D256R_2YRwbZq0RMnjaL-v7jRmZ61O3xSZoMaWLDlv6ou0X8jxVydeyWf5YnGIJN2hHX7MgOYdIuxrKuNUKXsK7MpPzbExsQbCLZLRYoiktsAsr2Ci6NA2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=5EfWZbjrIaQXJ6TEDvbFcJVpTgog1lVc9Tr-eSKK8UiMzjpIcDHKrfhacXP0xrJKYZi-rN3UMn1AJ5SdQYfi3_SDwRTfsq8cYbgvlHU9VdCTHnlve_FFApBsKIHK9lkHr7BFPQ2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=rPCumTzbnhsHuBNXRvNvK0xLBNPp6Ro3uTlFbTBwSyTy_86kj4oobFpG_vQzZBFXA2hcFnOd1kXhkub8qrt-84YeltF68a3W4rX2ITUDjeoM3Q3q_GKsevIcwzV5rxiNwwHDCw2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=4jK6xPbcmFVc8U0odJGT5vLkhmHvIGWXV7sxne_k9cW3FmV1ZcsZ0zaBCAHloeSdEDI-0Mcfs0Ax85NU2ITQIuJvk0W51B6vUf4YPOElp0LSs27zkVUSXgZOrP-n0L5JFnSvWQ2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=9trNecpdd3cCKYxZzuqhbJEv44PRL82aUfLt0j7ZVZ7FVy2jhkUhJhDAODi_u-QIC03Fx2XD53PUcnXjNl-RJ_sBmH0Ek1hb_K0v-YtGKdnpzmIuXPoE8Ffxd8pqjDKRhupDaw2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=pkkOdLff_931sxi1O0eYQQZTAVIsSsE_U6VAOvAMSTqhHdd8iWuomxcMnoi24M9csyMyu8-LdZPvUFuv4VVVec9M49ny98Zcl6ozvS_C898k5fTwBzH6aEVJgbMpPI_XScdwKQ2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=me0OQ4-VFDAcw7nO2Gr1mGUAhywKRIG6U3l9CohXMrohhBm95wFfAeE97WwK56Bmvu221KROmHozYqjIP7LDjhQiqYQBZqrQmnUySHpM2eTTEluFeJ_HoamIhecnrERRdJz_2Q2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=aG27OEqYjHEfIasNVzqoB7LuZOpJcfRNdtQWa64aSO9I4PPzKYqiZTO5EfN5BVrHKjc8VP_z6pCrZ86-JCx5wbnwMf1OqwSU6wzoUfBaUEUhH66dzXF2VMbh9I9H3biBnNZlAQ2&amp;t=7d5986a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=1l1VQ9-hi4uEvGnns90UIdj8VLYcvpu9GOGCe_KndTEsaclnnQSC5YKI0cJFhpYMzBsML0ZLBpzH-29KThLGF7tV5dlrFlSv_wc4c4yg3XPeyf0rR22IYIBoFsgXRsKsF1r1DA2&amp;t=7d5986a" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+var PageMethods = function() {
+PageMethods.initializeBase(this);
+this._timeout = 0;
+this._userContext = null;
+this._succeeded = null;
+this._failed = null;
+}
+PageMethods.prototype = {
+_get_path:function() {
+ var p = this.get_path();
+ if (p) return p;
+ else return PageMethods._staticInstance.get_path();},
+ClearSessionPageName:function(succeededCallback, failedCallback, userContext) {
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+return this._invoke(this._get_path(), 'ClearSessionPageName',false,{},succeededCallback,failedCallback,userContext); },
+GetReservationAddress:function(address,succeededCallback, failedCallback, userContext) {
+/// <param name="address" type="String">System.String</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+return this._invoke(this._get_path(), 'GetReservationAddress',false,{address:address},succeededCallback,failedCallback,userContext); },
+AutocompleteAddres:function(prefixText,count,succeededCallback, failedCallback, userContext) {
+/// <param name="prefixText" type="String">System.String</param>
+/// <param name="count" type="Number">System.Int32</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+return this._invoke(this._get_path(), 'AutocompleteAddres',false,{prefixText:prefixText,count:count},succeededCallback,failedCallback,userContext); },
+GetZone:function(latitude,longitude,address,locality,succeededCallback, failedCallback, userContext) {
+/// <param name="latitude" type="Number">System.Decimal</param>
+/// <param name="longitude" type="Number">System.Decimal</param>
+/// <param name="address" type="String">System.String</param>
+/// <param name="locality" type="String">System.String</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+return this._invoke(this._get_path(), 'GetZone',false,{latitude:latitude,longitude:longitude,address:address,locality:locality},succeededCallback,failedCallback,userContext); },
+AutocompleteVID:function(prefixText,count,succeededCallback, failedCallback, userContext) {
+/// <param name="prefixText" type="String">System.String</param>
+/// <param name="count" type="Number">System.Int32</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+return this._invoke(this._get_path(), 'AutocompleteVID',false,{prefixText:prefixText,count:count},succeededCallback,failedCallback,userContext); },
+GetPhoneInfo:function(succeededCallback, failedCallback, userContext) {
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+return this._invoke(this._get_path(), 'GetPhoneInfo',false,{},succeededCallback,failedCallback,userContext); }}
+PageMethods.registerClass('PageMethods',Sys.Net.WebServiceProxy);
+PageMethods._staticInstance = new PageMethods();
+PageMethods.set_path = function(value) {
+PageMethods._staticInstance.set_path(value); }
+PageMethods.get_path = function() { 
+/// <value type="String" mayBeNull="true">The service url.</value>
+return PageMethods._staticInstance.get_path();}
+PageMethods.set_timeout = function(value) {
+PageMethods._staticInstance.set_timeout(value); }
+PageMethods.get_timeout = function() { 
+/// <value type="Number">The service timeout.</value>
+return PageMethods._staticInstance.get_timeout(); }
+PageMethods.set_defaultUserContext = function(value) { 
+PageMethods._staticInstance.set_defaultUserContext(value); }
+PageMethods.get_defaultUserContext = function() { 
+/// <value mayBeNull="true">The service default user context.</value>
+return PageMethods._staticInstance.get_defaultUserContext(); }
+PageMethods.set_defaultSucceededCallback = function(value) { 
+ PageMethods._staticInstance.set_defaultSucceededCallback(value); }
+PageMethods.get_defaultSucceededCallback = function() { 
+/// <value type="Function" mayBeNull="true">The service default succeeded callback.</value>
+return PageMethods._staticInstance.get_defaultSucceededCallback(); }
+PageMethods.set_defaultFailedCallback = function(value) { 
+PageMethods._staticInstance.set_defaultFailedCallback(value); }
+PageMethods.get_defaultFailedCallback = function() { 
+/// <value type="Function" mayBeNull="true">The service default failed callback.</value>
+return PageMethods._staticInstance.get_defaultFailedCallback(); }
+PageMethods.set_enableJsonp = function(value) { PageMethods._staticInstance.set_enableJsonp(value); }
+PageMethods.get_enableJsonp = function() { 
+/// <value type="Boolean">Specifies whether the service supports JSONP for cross domain calling.</value>
+return PageMethods._staticInstance.get_enableJsonp(); }
+PageMethods.set_jsonpCallbackParameter = function(value) { PageMethods._staticInstance.set_jsonpCallbackParameter(value); }
+PageMethods.get_jsonpCallbackParameter = function() { 
+/// <value type="String">Specifies the parameter name that contains the callback function name for a JSONP request.</value>
+return PageMethods._staticInstance.get_jsonpCallbackParameter(); }
+PageMethods.set_path("Createres.aspx");
+PageMethods.ClearSessionPageName= function(onSuccess,onFailed,userContext) {
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+PageMethods._staticInstance.ClearSessionPageName(onSuccess,onFailed,userContext); }
+PageMethods.GetReservationAddress= function(address,onSuccess,onFailed,userContext) {
+/// <param name="address" type="String">System.String</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+PageMethods._staticInstance.GetReservationAddress(address,onSuccess,onFailed,userContext); }
+PageMethods.AutocompleteAddres= function(prefixText,count,onSuccess,onFailed,userContext) {
+/// <param name="prefixText" type="String">System.String</param>
+/// <param name="count" type="Number">System.Int32</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+PageMethods._staticInstance.AutocompleteAddres(prefixText,count,onSuccess,onFailed,userContext); }
+PageMethods.GetZone= function(latitude,longitude,address,locality,onSuccess,onFailed,userContext) {
+/// <param name="latitude" type="Number">System.Decimal</param>
+/// <param name="longitude" type="Number">System.Decimal</param>
+/// <param name="address" type="String">System.String</param>
+/// <param name="locality" type="String">System.String</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+PageMethods._staticInstance.GetZone(latitude,longitude,address,locality,onSuccess,onFailed,userContext); }
+PageMethods.AutocompleteVID= function(prefixText,count,onSuccess,onFailed,userContext) {
+/// <param name="prefixText" type="String">System.String</param>
+/// <param name="count" type="Number">System.Int32</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+PageMethods._staticInstance.AutocompleteVID(prefixText,count,onSuccess,onFailed,userContext); }
+PageMethods.GetPhoneInfo= function(onSuccess,onFailed,userContext) {
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+PageMethods._staticInstance.GetPhoneInfo(onSuccess,onFailed,userContext); }
+//]]>
+</script>
+
+<script src="/WebResource.axd?d=waVgS85spyAjhRLe-3weLCyZKvpfTZbUATvV3_3eE7cLIj21rxSOdIJOawkVvfJdAD0utvXC6H2lvF6R9wqKfrCd7yA1&amp;t=638012529744972059" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="D662A455" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="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" />
+</div>
+        <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$SMMaster', 'aspnetForm', ['tctl00$MiddleSection$UpdatePanelResStatus','','tctl00$MiddleSection$UpdatePanelLeft','','tctl00$MiddleSection$UpdatePanelRight','','tctl00$MiddleSection$upButtons',''], [], [], 90, 'ctl00');
+//]]>
+</script>
+
+        <script type="text/javascript">
+            $(function () {
+                try {
+                    //PageMethods.GetClientTimeZone(moment.tz.guess());
+                } catch (e) {
+                }
+            });
+        </script>
+        <div id="pagecontent">
+            <div id="maincol">
+                <div id="menu" style="position: relative; z-index: 9999">
+                    <div style="width: 100%; position: absolute; text-align: center;">
+                        <span id="ctl00_lblClientName">Coach</span>
+                    </div>
+                    <div id="ctl00_menuLeft" class="leftcol">
+                        <ul id="nav">
+                            
+
+    <div style="position: absolute; top: -4px; left: 2px">
+        <button id="buttonColorMode" type="button" onclick="changeColorMode(this)" style="width: 14px">L</button>
+    </div>
+<div style="position: relative; padding-left: 10px;z-index:9999">
+<ul id="nav">
+    <li id="ctl00_ucMenu_LiReservationStatus" class="toplevel">
+        <a id="ctl00_ucMenu_LinkButtonReservationStatus" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonReservationStatus&#39;,&#39;&#39;)">Reservation Status</a>
+    </li>
+    <li id="ctl00_ucMenu_LiNewReservation" class="toplevel">
+        <a id="ctl00_ucMenu_LinkButtonNewReservation" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonNewReservation&#39;,&#39;&#39;)">New Reservation</a>
+    </li>
+    <li id="ctl00_ucMenu_LiToolsMenu" class="toplevel">
+        <a onclick="return false;" id="ctl00_ucMenu_LinkButtonToolsMenu" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonToolsMenu&#39;,&#39;&#39;)">Tools</a>
+        <ul>
+            
+            <li id="ctl00_ucMenu_LiDriverList" class="subitem">
+                <a id="ctl00_ucMenu_LinkButtonDriverList" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonDriverList&#39;,&#39;&#39;)">Driver List</a>
+            </li>
+            <li id="ctl00_ucMenu_LiVehicleTools" class="subitem">
+                <a id="ctl00_ucMenu_LinkButtonVehicleTools" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonVehicleTools&#39;,&#39;&#39;)">Vehicle Tools</a>
+            </li>
+            <li id="ctl00_ucMenu_LiVehicleStatus" class="subitem">
+                <a id="ctl00_ucMenu_LinkButtonVehicleStatus" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonVehicleStatus&#39;,&#39;&#39;)">Vehicle Status</a>
+            </li>
+            <li id="ctl00_ucMenu_LiEmergencyList" class="subitem">
+                <a id="ctl00_ucMenu_LinkButtonVehicleEmergency" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonVehicleEmergency&#39;,&#39;&#39;)">Vehicle Emergencies</a>
+            </li>
+            <li id="ctl00_ucMenu_LiPhoneBook" class="subitem">
+                <a id="ctl00_ucMenu_LinkButtonPhoneBook" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonPhoneBook&#39;,&#39;&#39;)">Phone Book</a>
+            </li>
+            <li id="ctl00_ucMenu_LiPassword" class="subitem">
+                <a id="ctl00_ucMenu_LinkButtonUpdatePassword" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonUpdatePassword&#39;,&#39;&#39;)">Update Password</a>
+            </li>
+            <li id="ctl00_ucMenu_LiAdmin" class="lastitem">
+                <a id="ctl00_ucMenu_LinkButtonAdmin" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonAdmin&#39;,&#39;&#39;)">Admin Settings</a>
+            </li>
+        </ul>
+    </li>
+    <li id="ctl00_ucMenu_LiFutureMenu" class="toplevel">
+        <a onclick="return false;" id="ctl00_ucMenu_LinkButtonFutureMenu" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonFutureMenu&#39;,&#39;&#39;)">Future</a>
+        <ul>
+            
+            <li id="ctl00_ucMenu_listFutureRes" class="subitem">
+                <a id="ctl00_ucMenu_LinkButtonFuturereseRvationList" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonFuturereseRvationList&#39;,&#39;&#39;)">Future Reservation List</a>
+            </li>
+            <li id="ctl00_ucMenu_morningSignupVehicleListing" class="lastitem">
+                <a id="ctl00_ucMenu_LinkButtonMorningSignupVehicleListing" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonMorningSignupVehicleListing&#39;,&#39;&#39;)">Morning Signup Vehicle List</a>
+            </li>
+            <li id="ctl00_ucMenu_morningSignup" class="lastitem">
+                <a onclick="window.open(&#39;/Morningsignup.aspx&#39;); return false;" id="ctl00_ucMenu_LinkButtonMorningSignup" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonMorningSignup&#39;,&#39;&#39;)">Morning Signup</a>
+            </li>
+        </ul>
+    </li>
+    <li id="ctl00_ucMenu_LiHistoryMenu" class="toplevel">
+        <a onclick="return false;" id="ctl00_ucMenu_LinkButtonHistoryMenu" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonHistoryMenu&#39;,&#39;&#39;)">History</a>
+        <ul>
+            <li id="ctl00_ucMenu_LiMapHistory" class="subitem">
+                <a id="ctl00_ucMenu_LinkButtonMapHistory" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonMapHistory&#39;,&#39;&#39;)">Map History</a>
+            </li>
+            <li id="ctl00_ucMenu_statusCounts" class="subitem">
+                <a id="ctl00_ucMenu_LinkButtonStatusCounts" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonStatusCounts&#39;,&#39;&#39;)">Status History</a>
+            </li>
+            <li id="ctl00_ucMenu_LiHistory" class="subitem">
+                <a id="ctl00_ucMenu_LinkButtonHistory" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonHistory&#39;,&#39;&#39;)">Reservation History</a>
+            </li>
+        </ul>
+    </li>
+    <li id="ctl00_ucMenu_LiMap" class="toplevel-last">
+        <a id="ctl00_ucMenu_LinkButtonMap" href="javascript:__doPostBack(&#39;ctl00$ucMenu$LinkButtonMap&#39;,&#39;&#39;)">Map</a>
+    </li>
+</ul>
+</div>
+
+                        </ul>
+                    </div>
+                    <div id="ctl00_menuRight" class="rightcol">
+                        <span id="PageTimer"></span>
+                        <p style="padding-right: 10px">
+                            <span id="ctl00_lblLoggedOnAs">Currently logged on as:&nbsp;Hossein Khorsha&nbsp;&nbsp;</span>
+                            [<a id="ctl00_ButtonLogOff" href="javascript:__doPostBack(&#39;ctl00$ButtonLogOff&#39;,&#39;&#39;)">Log Out</a>]
+                        </p>
+                    </div>
+                </div>
+
+                <div id="mainsection">
+                    <div id="middlesection">
+                        
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCpvk4Jg29j6cAt0EAjCh1xQSYISj6hwoY"></script>
+
+    <script type="text/javascript">
+        var map, mapE, geocoder, autocomplete, mapBounds, service, markerP, markerD, DefaultLat, DefaultLon, DefaultZoom;
+        var lastEstimate = false;
+        var lastPUZone = '';
+        var lastPUAddress = '';
+        var lastDOAddress = '';
+        var DefaultDOAddres, DefaultDOLat, DefaultDOLon
+        var GoogleMinLength = 10;
+        var foundPUAddress = false;
+        var foundDOAddress = false;
+        var AllowGoogleAutoComplete = true;
+        var initialRate = parseFloat('0.00');
+        var additionalRate = parseFloat('0.00');
+
+        var lastCenter;
+        var phoneBook = [];
+
+        window.addEventListener('unload', function () {
+            PageMethods.ClearSessionPageName();
+        });
+
+        $('#menu').mouseover(function () {
+            var pb = $('#divPhoneBook');
+            if (pb.css('display') != 'none') {
+                pb.css('display', 'none');
+            }
+        });
+
+        $(document).ready(function () {
+            $('#bottomsection').css('display', 'none');
+            //$('#middlesection').css('margin-top', '-20px');
+
+            var prmInstance = Sys.WebForms.PageRequestManager.getInstance();
+            if (prmInstance != null) {
+                prmInstance.add_endRequest(endRequest);
+            }
+
+            setupMap();
+            PageMethods.GetPhoneInfo(setupPhoneBook);
+
+            DefaultDOAddres = $('#ctl00_MiddleSection_TextBoxDOAddress').val();
+            DefaultDOLat = $('#ctl00_MiddleSection_TextBoxDOLat').val();
+            DefaultDOLon = $('#ctl00_MiddleSection_TextBoxDOLon').val();
+
+            if (DefaultDOAddres.length > 0) {
+                foundDOAddress = true;
+            }
+        });
+
+        function endRequest() {
+            setupMapFunctions();
+
+            PageMethods.GetPhoneInfo(setupPhoneBook);
+
+            setMarkers('ctl00_MiddleSection_TextBoxPUAddress');
+        }
+
+        function PageTimerTrigger() {
+            document.getElementById('ctl00_MiddleSection_ButtonCancel').click();
+        }
+
+        function setupMap() {
+            DefaultLat = '39.08000';
+            DefaultLon = '-77.00000';
+
+            DefaultZoom = parseInt('10');
+            if ((!DefaultZoom) || (DefaultZoom < 1) || (DefaultZoom > 18)) {
+                DefaultZoom = 14;
+            }
+
+            var defaultRadius = parseInt('100');
+            if ((!defaultRadius) || (defaultRadius < 0)) {
+                defaultRadius = 100;
+            }
+
+            var latlng = new google.maps.LatLng(DefaultLat, DefaultLon);
+            var options = {
+                zoom: DefaultZoom,
+                center: latlng,
+                fullscreenControl: false,
+                streetViewControl: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            map = new google.maps.Map(document.getElementById('map_canvas'), options);
+            map.setOptions({ styles: mapStyles[darkMode ? 'dark' : 'light'] });
+
+            lastCenter = map.getCenter();
+
+            geocoder = new google.maps.Geocoder();
+
+            service = new google.maps.places.PlacesService(map);
+
+            mapBounds = new google.maps.LatLngBounds();
+            if (defaultRadius <= 0) {
+                var southWest = new google.maps.LatLng(32.94156, -123.43814);
+                var northEast = new google.maps.LatLng(42.05516, -65.43033);
+                mapBounds = new google.maps.LatLngBounds(southWest, northEast);
+            } else {
+                mapBounds.union(new google.maps.Circle({ center: latlng, radius: defaultRadius * 1609.334 }).getBounds());
+            }
+
+            options = {
+                componentRestrictions: { country: "US" },
+                bounds: mapBounds
+            };
+            autocomplete = new google.maps.places.AutocompleteService(options);
+
+            setMarkerP();
+            setMarkerD();
+
+            var lat = parseFloat($('#ctl00_MiddleSection_TextBoxDOLat').val());
+            if ((!lat) || (lat < -90) || (lat > 90)) {
+                lat = undefined;
+            }
+            var lng = parseFloat($('#ctl00_MiddleSection_TextBoxDOLon').val());
+            if ((!lng) || (lng < -180) || (lng > 180)) {
+                lng = undefined;
+            }
+
+            if ((lat) && (lng)) {
+                markerD.setPosition(new google.maps.LatLng(lat, lng));
+                setMarkers('AD_MR-DO-ctl00_MiddleSection_TextBoxDOAddress');
+            }
+
+            setupMapFunctions();
+        }
+
+        function setMarkerP() {
+            markerP = new google.maps.Marker({
+                title: 'Pick-Up Address',
+                icon: { url: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=P|FF0000|FFFFFF' },
+                map: map,
+                draggable: false
+            });
+
+            markerP.addListener('dragend', function () {
+                geocoder.geocode({ 'latLng': markerP.getPosition() }, function (results, status) {
+                    if ((status == google.maps.GeocoderStatus.OK) && (results[0])) {
+                        $('#ctl00_MiddleSection_TextBoxPUAddress').val(results[0].formatted_address.replace(', USA', '').replace(', United States', ''));
+                        $('#ctl00_MiddleSection_TextBoxJSONPUAddress').val(escape(JSON.stringify(results[0])));
+                        $('#ctl00_MiddleSection_TextBoxPULat').val(markerP.getPosition().lat().toFixed(5));
+                        $('#ctl00_MiddleSection_TextBoxPULon').val(markerP.getPosition().lng().toFixed(5));
+                        lastPUAddress = $('#ctl00_MiddleSection_TextBoxPUAddress').val();
+                        setMarkers('AD_DR-PU-ctl00_MiddleSection_TextBoxPUAddress');
+                    }
+                });
+
+            });
+        }
+
+        function setMarkerD() {
+            markerD = new google.maps.Marker({
+                title: 'Drop-Off Address',
+                map: map,
+                icon: { url: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=D|FF0000|FFFFFF' },
+                draggable: false
+            });
+
+            markerD.addListener('dragend', function () {
+                geocoder.geocode({ 'latLng': markerD.getPosition() }, function (results, status) {
+                    if ((status == google.maps.GeocoderStatus.OK) && (results[0])) {
+                        $('#ctl00_MiddleSection_TextBoxDOAddress').val(results[0].formatted_address.replace(', USA', '').replace(', United States', ''));
+                        $('#ctl00_MiddleSection_TextBoxJSONDOAddress').val((JSON.stringify(results[0])));
+                        $('#ctl00_MiddleSection_TextBoxDOLat').val(markerD.getPosition().lat().toFixed(5));
+                        $('#ctl00_MiddleSection_TextBoxDOLon').val(markerD.getPosition().lng().toFixed(5));
+                        setMarkers('AD_DR-DO-ctl00_MiddleSection_TextBoxDOAddress');
+                    }
+                });
+            });
+        }
+
+        function PUAddressACCount(sender, e) {
+            var CurrentAllow = false;
+            if ($('#ctl00_MiddleSection_TextBoxPUAddress').val().length >= GoogleMinLength - 1) {
+                var CurrentAllow = AllowGoogleAutoComplete;
+            }
+
+            AllowGoogleAutoComplete = (sender.get_completionList().childNodes.length == 0);
+
+            if ((CurrentAllow) && (!AllowGoogleAutoComplete)) {
+                $('#ctl00_MiddleSection_TextBoxPUAddress').autocomplete('close');
+            }
+        }
+
+        function DOAddressACCount(sender, e) {
+            var CurrentAllow = false;
+            if ($('#ctl00_MiddleSection_TextBoxDOAddress').val().length >= GoogleMinLength - 1) {
+                var CurrentAllow = AllowGoogleAutoComplete;
+            }
+
+            AllowGoogleAutoComplete = (sender.get_completionList().childNodes.length == 0);
+
+            if ((CurrentAllow) && (!AllowGoogleAutoComplete)) {
+                $('#ctl00_MiddleSection_TextBoxDOAddress').autocomplete('close');
+            }
+        }
+
+        function setupMapFunctions() {
+            $(function () {
+                $('#ctl00_MiddleSection_TextBoxPUAddress').autocomplete({
+                    minLength: GoogleMinLength,
+                    source: function (request, response) {
+                        if (AllowGoogleAutoComplete) {
+                            autocomplete.getPlacePredictions({ input: request.term, type: 'geocode' }, function (results, status) {
+                                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                                    response($.map(results, function (item) {
+                                        return {
+                                            label: item.description.replace(', USA', '').replace(', United States', ''),
+                                            value: item.description.replace(', USA', '').replace(', United States', ''),
+                                            placeid: item.place_id
+                                        }
+                                    }));
+                                }
+                            });
+                        }
+                    },
+                    select: function (event, ui) {
+                        $("#ctl00_MiddleSection_TextBoxPUAddress").removeClass('ui-autocomplete-loading');
+                            if (ui != null) {
+                                service.getDetails({ placeId: ui.item.placeid }, function (place, status) {
+                                    if ((status === google.maps.places.PlacesServiceStatus.OK) && (place)) {
+                                        $('#ctl00_MiddleSection_TextBoxPUAddress').val(place.formatted_address.replace(', USA', '').replace(', United States', ''));
+                                        $('#ctl00_MiddleSection_TextBoxJSONPUAddress').val(escape(JSON.stringify(place)));
+                                        $('#ctl00_MiddleSection_TextBoxPULat').val(place.geometry.location.lat().toFixed(5));
+                                        $('#ctl00_MiddleSection_TextBoxPULon').val(place.geometry.location.lng().toFixed(5));
+                                        lastPUAddress = $('#ctl00_MiddleSection_TextBoxPUAddress').val();
+                                        setMarkers('AD_AC-PU-ctl00_MiddleSection_TextBoxPUAddress');
+                                        lastPUZone = '';
+                                        PageMethods.GetZone(results.geometry.location.lat, results.geometry.location.lng, results.formatted_address, locality, setPUZone);
+                                    }
+                                });
+                        }
+                    }
+                });
+            });
+
+            $(function () {
+                $("#ctl00_MiddleSection_TextBoxDOAddress").autocomplete({
+                    minLength: GoogleMinLength,
+                    source: function (request, response) {
+                        if (AllowGoogleAutoComplete) {
+                            autocomplete.getPlacePredictions({ input: request.term, type: 'geocode' }, function (results, status) {
+                                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                                    response($.map(results, function (item) {
+                                        return {
+                                            label: item.description.replace(', USA', '').replace(', United States', ''),
+                                            value: item.description.replace(', USA', '').replace(', United States', ''),
+                                            placeid: item.place_id
+                                        }
+                                    }));
+                                }
+                            });
+                        }
+                    },
+                    select: function (event, ui) {
+                        $("#ctl00_MiddleSection_TextBoxDOAddress").removeClass('ui-autocomplete-loading');
+                        if (ui != null) {
+                            service.getDetails({ placeId: ui.item.placeid }, function (place, status) {
+                                if ((status === google.maps.places.PlacesServiceStatus.OK) && (place)) {
+                                    $('#ctl00_MiddleSection_TextBoxDOAddress').val(place.formatted_address.replace(', USA', '').replace(', United States', ''));
+                                    $('#ctl00_MiddleSection_TextBoxJSONDOAddress').val(escape(JSON.stringify(place)));
+                                    $('#ctl00_MiddleSection_TextBoxDOLat').val(place.geometry.location.lat().toFixed(5));
+                                    $('#ctl00_MiddleSection_TextBoxDOLon').val(place.geometry.location.lng().toFixed(5));
+                                    setMarkers('AD_AC-DO-ctl00_MiddleSection_TextBoxDOAddress');
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+
+            $(function () {
+                $('#ctl00_MiddleSection_TextBoxPUAddress').on('cut paste mouseup input', function () {
+                    setMarkers('ctl00_MiddleSection_TextBoxPUAddress');
+                });
+                $('#ctl00_MiddleSection_TextBoxDOAddress').on('cut paste mouseup input', function () {
+                    setMarkers('ctl00_MiddleSection_TextBoxDOAddress');
+                });
+            });
+        }
+
+        function setGPSInfo() {
+            $('#spanPUAddress').prop('title', 'Latitude: ' + $('#ctl00_MiddleSection_TextBoxPULat').val() + '\nLongitude: ' + $('#ctl00_MiddleSection_TextBoxPULon').val() + '\n' + $('#ctl00_MiddleSection_TextBoxJSONPUAddress').val().length);
+            $('#spanDOAddress').prop('title', 'Latitude: ' + $('#ctl00_MiddleSection_TextBoxDOLat').val() + '\nLongitude: ' + $('#ctl00_MiddleSection_TextBoxDOLon').val() + '\n' + $('#ctl00_MiddleSection_TextBoxJSONDOAddress').val().length);
+        }
+
+        function setMarkers(id) {
+            setGPSInfo();
+
+            if (id.indexOf('ListBox') > 0) {
+                if (id.indexOf('PUListBox') > 0) {
+                    lastPUZone = $('#ctl00_MiddleSection_TextBoxPUAddress').val();
+                }
+
+                document.getElementById('ctl00_MiddleSection_TextBoxPUAddress').selectionStart = document.getElementById('ctl00_MiddleSection_TextBoxPUAddress').value.length;
+                document.getElementById('ctl00_MiddleSection_TextBoxDOAddress').selectionStart = document.getElementById('ctl00_MiddleSection_TextBoxDOAddress').value.length;
+            }
+
+            if (($('#ctl00_MiddleSection_TextBoxPUAddress').val() == lastPUAddress) && ($('#ctl00_MiddleSection_TextBoxDOAddress').val() == lastDOAddress) && (map.getCenter() == lastCenter)) {
+                //return;
+            }
+
+            var latitudeP = parseFloat($('#ctl00_MiddleSection_TextBoxPULat').val());
+            var longitudeP = parseFloat($('#ctl00_MiddleSection_TextBoxPULon').val());
+            var latitudeD = parseFloat($('#ctl00_MiddleSection_TextBoxDOLat').val());
+            var longitudeD = parseFloat($('#ctl00_MiddleSection_TextBoxDOLon').val());
+
+            if ((id.length > 3) && (id.substring(0, 3) != 'AD_')) {
+                if ((lastPUAddress) && ($('#ctl00_MiddleSection_TextBoxPUAddress').val() != lastPUAddress) && (markerP.getPosition()) && (latitudeP != 0)) {
+                    $('#ctl00_MiddleSection_TextBoxJSONPUAddress').val('')
+                    $('#ctl00_MiddleSection_TextBoxPULat').val('0.00000');
+                    $('#ctl00_MiddleSection_TextBoxPULon').val('0.00000');
+
+                    markerP.setMap(null);
+                    markerP = null;
+                    setMarkerP();
+
+                    clearDistances();
+                    setGPSInfo();
+
+                    $('#ctl00_MiddleSection_TextBoxPUZone').val('');
+                    lastPUZone = $('#ctl00_MiddleSection_TextBoxPUAddress').val();
+
+                    foundPUAddress = false;
+                }
+
+                if ((lastDOAddress) && ($('#ctl00_MiddleSection_TextBoxDOAddress').val() != lastDOAddress) && (markerD.getPosition()) && (latitudeD != 0)) {
+                    $('#ctl00_MiddleSection_TextBoxJSONDOAddress').val('')
+                    $('#ctl00_MiddleSection_TextBoxDOLat').val('0.00000');
+                    $('#ctl00_MiddleSection_TextBoxDOLon').val('0.00000');
+
+                    markerD.setMap(null);
+                    markerD = null;
+                    setMarkerD();
+
+                    clearDistances();
+                    setGPSInfo();
+
+                    foundDOAddress = false;
+                }
+            }
+
+            if ((id.length > 3) && (id.substring(0, 3) == 'AD_')) {
+                clearDistances();
+            }
+
+            var mapBounds = new google.maps.LatLngBounds();
+            var locationP, locationD;
+
+            var i = 0;
+            if ((latitudeP) && ((latitudeP > 1) || (latitudeP < -1)) && (longitudeP) && ((longitudeP > 1) || (longitudeP < -1))) {
+                locationP = new google.maps.LatLng(latitudeP, longitudeP);
+                mapBounds.extend(locationP);
+                markerP.setPosition(locationP);
+                markerP.title = 'Pick-Up Address\n' + $('#ctl00_MiddleSection_TextBoxPUAddress').val();
+                i = 1;
+            }
+            if ((latitudeD) && ((latitudeD > 1) || (latitudeD < -1)) && (longitudeD) && ((longitudeD > 1) || (longitudeD < -1))) {
+                locationD = new google.maps.LatLng(latitudeD, longitudeD);
+                mapBounds.extend(locationD);
+                markerD.setPosition(locationD);
+                markerD.title = 'Drop-Off Address\n' + $('#ctl00_MiddleSection_TextBoxDOAddress').val();
+                i += 2;
+            }
+
+            var latlng = new google.maps.LatLng(DefaultLat, DefaultLon);
+
+            document.getElementById("dEstimate").style.visibility = "hidden";
+
+            if (i == 3) {
+                map.fitBounds(mapBounds);
+
+                if (initialRate > 0 && additionalRate > 0) {
+                    document.getElementById("dEstimate").style.visibility = "visible";
+                }
+            } else if (i == 2) {
+                map.setCenter(locationD);
+                map.setZoom(DefaultZoom);
+                //mapBounds.extend(latlng);
+                //map.fitBounds(mapBounds);
+            } else if (i == 1) {
+                map.setCenter(locationP);
+                map.setZoom(DefaultZoom);
+                //mapBounds.extend(latlng);
+                //map.fitBounds(mapBounds);
+            } else {
+                map.setCenter(latlng);
+                map.setZoom(DefaultZoom);
+            }
+
+            if (id.indexOf('PUAddress') > 0) {
+                lastPUAddress = $('#ctl00_MiddleSection_TextBoxPUAddress').val();
+            }
+            if (id.indexOf('DOAddress') > 0) {
+                lastDOAddress = $('#ctl00_MiddleSection_TextBoxDOAddress').val();
+            }
+
+            lastCenter = map.getCenter();
+        }
+
+        function selectedPUAddress() {
+            foundPUAddress = false;
+            findPUAddress()
+        }
+
+        function selectedDOAddress() {
+            foundDOAddress = false;
+            findDOAddress()
+        }
+
+        function findPUAddress() {
+            $("#ctl00_MiddleSection_TextBoxPUAddress").removeClass('ui-autocomplete-loading');
+            var latitudeP = parseFloat($('#ctl00_MiddleSection_TextBoxPULat').val());
+            var longitudeP = parseFloat($('#ctl00_MiddleSection_TextBoxPULon').val());
+            if ((!foundPUAddress) && ($('#ctl00_MiddleSection_TextBoxPUAddress').val().length > 2) && ((!latitudeP) || (!longitudeP) || (latitudeP == 0) || (longitudeP == 0))) {
+                foundPUAddress = true;
+                PageMethods.GetReservationAddress($('#ctl00_MiddleSection_TextBoxPUAddress').val(), function (response) {
+                    var result = false;
+                    var results = JSON.parse(response);
+                    if (results.status == 'OK') {
+                        result = true;
+
+                        var street_number = null;
+                        var locality = '';
+                        $.each(results.address_components, function () {
+                            switch (this.types[0]) {
+                                case "street_number":
+                                    street_number = this.short_name;
+                                    break;
+                                case "locality":
+                                    locality = this.short_name;
+                                    break;
+                            }
+                        });
+                        if ((street_number != null) && ($('#ctl00_MiddleSection_TextBoxPUAddress').val().startsWith(street_number)) && (mapBounds.contains(new google.maps.LatLng(results.geometry.location.lat, results.geometry.location.lng)))) {
+                            $('#ctl00_MiddleSection_TextBoxPUAddress').val(results.formatted_address.replace(', USA', '').replace(', United States', ''));
+                            $('#ctl00_MiddleSection_TextBoxJSONPUAddress').val(escape(JSON.stringify(results)));
+                            $('#ctl00_MiddleSection_TextBoxPULat').val(results.geometry.location.lat);
+                            $('#ctl00_MiddleSection_TextBoxPULon').val(results.geometry.location.lng);
+
+                            lastPUAddress = $('#ctl00_MiddleSection_TextBoxPUAddress').val();
+                            setMarkers('AD_FA-ctl00_MiddleSection_TextBoxPUAddress');
+                            lastPUZone = '';
+                            PageMethods.GetZone(results.geometry.location.lat, results.geometry.location.lng, results.formatted_address, locality, setPUZone);
+                        }
+                    }
+
+                    if (!result) {
+                        geocoder.geocode({ 'bounds': mapBounds, 'address': $('#ctl00_MiddleSection_TextBoxPUAddress').val() }, function (results, status) {
+                            if ((status === google.maps.places.PlacesServiceStatus.OK) && (results[0])) {
+                                result = true;
+                                var street_number = null;
+                                var locality = '';
+                                $.each(results[0].address_components, function () {
+                                    switch (this.types[0]) {
+                                        case "street_number":
+                                            street_number = this.short_name;
+                                            break;
+                                        case "locality":
+                                            locality = this.short_name;
+                                            break;
+                                    }
+                                });
+
+                                if ((street_number != null) && ($('#ctl00_MiddleSection_TextBoxPUAddress').val().startsWith(street_number)) && (mapBounds.contains(results[0].geometry.location))) {
+                                    $('#ctl00_MiddleSection_TextBoxPUAddress').val(results[0].formatted_address.replace(', USA', '').replace(', United States', ''));
+                                    $('#ctl00_MiddleSection_TextBoxJSONPUAddress').val(escape(JSON.stringify(results[0])));
+                                    $('#ctl00_MiddleSection_TextBoxPULat').val(results[0].geometry.location.lat().toFixed(5));
+                                    $('#ctl00_MiddleSection_TextBoxPULon').val(results[0].geometry.location.lng().toFixed(5));
+
+                                    lastPUAddress = $('#ctl00_MiddleSection_TextBoxPUAddress').val();
+                                    setMarkers('AD_FA-ctl00_MiddleSection_TextBoxPUAddress');
+                                    lastPUZone = '';
+                                    PageMethods.GetZone(results[0].geometry.location.lat, results[0].geometry.location.lng, results[0].formatted_address, locality, setPUZone);
+                                } else {
+                                    foundPUAddress = false;
+                                }
+                            } else {
+                                foundPUAddress = false;
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
+        function findDOAddress() {
+            $("#ctl00_MiddleSection_TextBoxDOAddress").removeClass('ui-autocomplete-loading');
+            var latitudeD = parseFloat($('#ctl00_MiddleSection_TextBoxDOLat').val());
+            var longitudeD = parseFloat($('#ctl00_MiddleSection_TextBoxDOLon').val());
+            if ((!foundDOAddress) && ($('#ctl00_MiddleSection_TextBoxDOAddress').val().length > 2) && ((!latitudeD) || (!longitudeD) || (latitudeD == 0) || (longitudeD == 0))) {
+                foundDOAddress = true;
+                PageMethods.GetReservationAddress($('#ctl00_MiddleSection_TextBoxDOAddress').val(), function (response) {
+                    var result = false;
+
+                    var results = JSON.parse(response);
+                    if (results.status == 'OK') {
+                        result = true;
+
+                        var street_number = null;
+                        var locality = '';
+                        $.each(results.address_components, function () {
+                            switch (this.types[0]) {
+                                case "street_number":
+                                    street_number = this.short_name;
+                                    break;
+                                case "locality":
+                                    locality = this.short_name;
+                                    break;
+                            }
+                        });
+
+                        if ((street_number != null) && ($('#ctl00_MiddleSection_TextBoxDOAddress').val().startsWith(street_number)) && (mapBounds.contains(new google.maps.LatLng(results.geometry.location.lat, results.geometry.location.lng)))) {
+                            $('#ctl00_MiddleSection_TextBoxDOAddress').val(results.formatted_address.replace(', USA', '').replace(', United States', ''));
+                            $('#ctl00_MiddleSection_TextBoxJSONDOAddress').val(escape(JSON.stringify(results)));
+                            $('#ctl00_MiddleSection_TextBoxDOLat').val(results.geometry.location.lat);
+                            $('#ctl00_MiddleSection_TextBoxDOLon').val(results.geometry.location.lng);
+
+                            lastDOAddress = $('#ctl00_MiddleSection_TextBoxDOAddress').val();
+                            setMarkers('AD_FA-ctl00_MiddleSection_TextBoxDOAddress');
+                        }
+                    }
+
+                    if (!result) {
+                        geocoder.geocode({ 'bounds': mapBounds, 'address': $('#ctl00_MiddleSection_TextBoxDOAddress').val() }, function (results, status) {
+                            if ((status === google.maps.places.PlacesServiceStatus.OK) && (results[0])) {
+                                result = true;
+                                var street_number = null;
+                                var locality = '';
+                                $.each(results[0].address_components, function () {
+                                    switch (this.types[0]) {
+                                        case "street_number":
+                                            street_number = this.short_name;
+                                            break;
+                                        case "locality":
+                                            locality = this.short_name;
+                                            break;
+                                    }
+                                });
+
+                                if ((street_number != null) && ($('#ctl00_MiddleSection_TextBoxDOAddress').val().startsWith(street_number)) && (mapBounds.contains(results[0].geometry.location))) {
+                                    $('#ctl00_MiddleSection_TextBoxDOAddress').val(results[0].formatted_address.replace(', USA', '').replace(', United States', ''));
+                                    $('#ctl00_MiddleSection_TextBoxJSONDOAddress').val(escape(JSON.stringify(results[0])));
+                                    $('#ctl00_MiddleSection_TextBoxDOLat').val(results[0].geometry.location.lat().toFixed(5));
+                                    $('#ctl00_MiddleSection_TextBoxDOLon').val(results[0].geometry.location.lng().toFixed(5));
+
+                                    lastDOAddress = $('#ctl00_MiddleSection_TextBoxDOAddress').val();
+                                    setMarkers('AD_FA-ctl00_MiddleSection_TextBoxDOAddress');
+                                } else {
+                                    foundDOAddress = false;
+                                }
+                            } else {
+                                foundDOAddress = false;
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
+        function clearDistances() {
+            $('#fare').html('');
+            $('#mapEstimate').css('visibility', 'hidden');
+        }
+
+        function calculateDistances() {
+            clearDistances();
+
+            var glatitude1 = parseFloat($('#ctl00_MiddleSection_TextBoxPULat').val());
+            var glongitude1 = parseFloat($('#ctl00_MiddleSection_TextBoxPULon').val());
+            var glatitude2 = parseFloat($('#ctl00_MiddleSection_TextBoxDOLat').val());
+            var glongitude2 = parseFloat($('#ctl00_MiddleSection_TextBoxDOLon').val());
+
+            if (isNaN(glatitude1) || isNaN(glongitude1) || isNaN(glatitude2) || isNaN(glongitude2) || glatitude1 == 0 || glongitude1 == 0 || glatitude2 == 0 || glongitude2 == 0 || initialRate == 0 || additionalRate == 0) {
+                $('#fare').html('Cannot calculate estimated fare');
+
+                return;
+            }
+
+            var directionsService = new google.maps.DirectionsService();
+            var directionsDisplay = new google.maps.DirectionsRenderer();
+
+            var myOptions = {
+                zoom: 7,
+                fullscreenControl: false,
+                streetViewControl: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+
+            $('#mapEstimate').css('visibility', 'visible');
+            mapE = new google.maps.Map(document.getElementById("mapEstimate"), myOptions);
+            mapE.setOptions({ styles: mapStyles[darkMode ? 'dark' : 'light'] });
+            directionsDisplay.setMap(mapE);
+
+            if ((glatitude1) && (glongitude1) && (glatitude2) && (glongitude2)) {
+                var request = {
+                    origin: glatitude1 + ", " + glongitude1,
+                    destination: glatitude2 + ", " + glongitude2,
+                    travelMode: google.maps.DirectionsTravelMode.DRIVING,
+                    unitSystem: google.maps.UnitSystem.IMPERIAL
+                };
+
+                directionsService.route(request, function (response, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        var distance = response.routes[0].legs[0].distance.value * 0.000621371;
+                        var duration = response.routes[0].legs[0].duration.value / 60;
+
+                        $('#fare').html('Est. $' + Math.ceil((distance * additionalRate) + initialRate) + '.00 + Extras, ' + Math.ceil(distance) + ' Miles, ' + Math.ceil(duration) + ' Minutes');
+
+                        directionsDisplay.setDirections(response);
+
+                        $("#dEstimate").css('visibility', 'hidden');
+                    } else {
+                        $('#fare').html('Google Request error: ' + status);
+                    }
+                });
+            }
+        }
+
+        function setPUZone(response) {
+            $('#ctl00_MiddleSection_TextBoxPUZone').val(response);
+            lastPUZone = response;
+        }
+
+        function resetPUIndex() {
+            document.getElementById('ctl00_MiddleSection_ListBoxPUAddress').selectedIndex = -1;
+        }
+
+        function resetDOIndex() {
+            document.getElementById('ctl00_MiddleSection_ListBoxDOAddress').selectedIndex = -1;
+        }
+
+        function testPUDate() {
+            if (rlactive === true) {
+                document.getElementById('ctl00_MiddleSection_DropDownListHour').focus();
+                document.getElementById('ctl00_MiddleSection_ButtonPUDate').click();
+            }
+        }
+
+        function saveFocus(sender) {
+            sender.focus();
+
+            var latitudeP = parseFloat($('#ctl00_MiddleSection_TextBoxPULat').val());
+            var longitudeP = parseFloat($('#ctl00_MiddleSection_TextBoxPULon').val());
+            var latitudeD = parseFloat($('#ctl00_MiddleSection_TextBoxDOLat').val());
+            var longitudeD = parseFloat($('#ctl00_MiddleSection_TextBoxDOLon').val());
+
+            if (((!latitudeP) || (latitudeP == 0)) && ((!longitudeP) || (longitudeP == 0))) {
+                //alert("NO PU");
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        var lastFocusedControlId = '';
+
+        Sys.Application.add_init(appInit);
+
+        function focusHandler(e) {
+            document.activeElement = e.originalTarget;
+        }
+
+        function appInit() {
+            if (typeof (window.addEventListener) !== "undefined") {
+                window.addEventListener("focus", focusHandler, true);
+            }
+
+            Sys.WebForms.PageRequestManager.getInstance().add_pageLoading(pageLoadingHandler);
+            Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(pageLoadedHandler);
+        }
+
+        function pageLoadingHandler(sender, args) {
+            lastFocusedControlId = typeof (document.activeElement) === "undefined"
+                ? "" : document.activeElement.id;
+        }
+
+        function pageLoadedHandler(sender, e) {
+            if (typeof (lastFocusedControlId) !== "undefined" && lastFocusedControlId != "") {
+                var newFocused = $get(lastFocusedControlId);
+                if (newFocused) {
+                    focusControl(newFocused);
+                }
+            }
+
+            if (document.getElementById('ctl00_MiddleSection_TextBoxFone1').value.match(/[a-z]/i)) {
+                document.getElementById('sPhone').style.display = 'none';
+                document.getElementById('ctl00_MiddleSection_TextBoxFone1').style.width = '125px';
+                document.getElementById('ctl00_MiddleSection_TextBoxFone1').maxLength = '10';
+
+                $('#ctl00_MiddleSection_CheckBoxSMS').prop('checked', false);
+                $('#ctl00_MiddleSection_CheckBoxSMS').prop('disabled', true);
+                $('#ctl00_MiddleSection_LabelSMS').css('color', 'lightgray');
+            } else {
+                $('#ctl00_MiddleSection_CheckBoxSMS').prop('disabled', false);
+            }
+
+            //alert("E: [" + document.getElementById('__EVENTTARGET').value + "]");
+        }
+
+        function focusControl(targetControl) {
+            if (Sys.Browser.agent === Sys.Browser.InternetExplorer) {
+                var focusTarget = targetControl;
+                if (focusTarget && (typeof (focusTarget.contentEditable) !== "undefined")) {
+                    oldContentEditableSetting = focusTarget.contentEditable;
+                    focusTarget.contentEditable = false;
+                }
+                else {
+                    focusTarget = null;
+                }
+                targetControl.focus();
+                if (focusTarget) {
+                    focusTarget.contentEditable = oldContentEditableSetting;
+                }
+            }
+            else {
+                targetControl.focus();
+
+                if (targetControl.type == 'text') {
+                    targetControl.selectionStart = targetControl.value.length;
+                    targetControl.selectionEnd = targetControl.value.length;
+                }
+
+                if ((targetControl.id.indexOf('TextBoxFone1') > 0) ||
+                    (targetControl.id.indexOf('TextBoxFone2') > 0) ||
+                    (targetControl.id.indexOf('TextBoxFone3') > 0)) {
+                    targetControl.selectionStart = 0;
+                    targetControl.selectionEnd = targetControl.value.length;
+                }
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        function PhonePaste(sender, event) {
+            var pText = '';
+            if (window.clipboardData && window.clipboardData.getData) {
+                pText = window.clipboardData.getData('Text');
+            } else if (event.clipboardData && event.clipboardData.getData) {
+                pText = event.clipboardData.getData('text/plain');
+            }
+
+            pText = pText.replace(/\D/g, '');
+
+            if ((pText.length == 11) && (pText.substr(0, 1) == '1')) {
+                pText = pText.substr(1, 10);
+            }
+
+            if (pText.length == 10) {
+                document.getElementById('ctl00_MiddleSection_TextBoxFone1').value = pText.substr(0, 3);
+                document.getElementById('ctl00_MiddleSection_TextBoxFone2').value = pText.substr(3, 3);
+                document.getElementById('ctl00_MiddleSection_TextBoxFone3').value = pText.substr(6, 4);
+
+                document.getElementById('ctl00_MiddleSection_TextBoxPhone').value = document.getElementById('ctl00_MiddleSection_TextBoxFone1').value +
+                    document.getElementById('ctl00_MiddleSection_TextBoxFone2').value +
+                    document.getElementById('ctl00_MiddleSection_TextBoxFone3').value;
+
+                var tbn = document.getElementById('ctl00_MiddleSection_TextBoxName');
+                tbn.focus();
+                tbn.selectionStart = tbn.selectionEnd = tbn.value.length;
+
+                __doPostBack('ctl00_MiddleSection_TextBoxPhone', 'TextChanged');
+            }
+
+            return false;
+        }
+
+        function PhoneKeyDown(sender, event) {
+            var keyCode = (event.which) ? event.which : (window.event.keyCode) ? window.event.keyCode : -1;
+
+            if ((event.ctrlKey) && ((keyCode == 86) || (keyCode == 118))) {
+                return true;
+            }
+
+            var tbp1 = document.getElementById('ctl00_MiddleSection_TextBoxFone1');
+            var tbp2 = document.getElementById('ctl00_MiddleSection_TextBoxFone2');
+            var tbp3 = document.getElementById('ctl00_MiddleSection_TextBoxFone3');
+
+            if ((tbp1.value.match(/[a-z]/i)) && (keyCode == 13)) {
+                var tbn = document.getElementById('ctl00_MiddleSection_TextBoxName');
+                tbn.focus();
+                tbn.selectionStart = tbn.selectionEnd = tbn.value.length;
+
+                __doPostBack('ctl00_MiddleSection_TextBoxPhone', 'TextChanged');
+            }
+
+            if ((keyCode == 9) || ((keyCode >= 35) && (keyCode <= 40)) || (keyCode == 46)) {
+                if (keyCode == 35) {
+                    if (tbp1.value.length < 3) {
+                        tbp1.focus();
+                        tbp1.selectionStart = tbp1.selectionEnd = tbp1.value.length;
+                    } else if (tbp2.value.length < 3) {
+                        tbp2.focus();
+                        tbp2.selectionStart = tbp2.selectionEnd = tbp2.value.length;
+                    } else {
+                        tbp3.focus();
+                        tbp3.selectionStart = tbp3.selectionEnd = tbp3.value.length;
+                    }
+                } else if (keyCode == 36) {
+                    tbp1.focus();
+                    tbp1.selectionStart = tbp1.selectionEnd = 0;
+                } else if (keyCode == 37) {
+                    if ((document.activeElement == tbp3) && (tbp3.selectionStart == 0)) {
+                        tbp2.focus();
+                        tbp2.selectionStart = tbp2.selectionEnd = tbp2.value.length;
+                        return false;
+                    } else if ((document.activeElement == tbp2) && (tbp2.selectionStart == 0)) {
+                        tbp1.focus();
+                        tbp1.selectionStart = tbp1.selectionEnd = tbp1.value.length;
+                        return false;
+                    }
+                } else if (keyCode == 39) {
+                    if ((document.activeElement == tbp1) && (tbp1.selectionStart == 3)) {
+                        tbp2.focus();
+                        tbp2.selectionStart = tbp2.selectionEnd = 0;
+                        return false;
+                    } else if ((document.activeElement == tbp2) && (tbp2.selectionStart == 3)) {
+                        tbp3.focus();
+                        tbp3.selectionStart = tbp3.selectionEnd = 0;
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            if (sender.id.indexOf('TextBoxFone1') > 0) {
+                return true;
+            }
+
+            if ((event.shiftKey) || (event.ctrlKey)) {
+                return false;
+            }
+
+            if ((keyCode != 8) && (keyCode != 46) && ((keyCode < 48) || (keyCode > 57)) && ((keyCode < 96) || (keyCode > 105))) {
+                return false;
+            }
+
+            if (sender.id.indexOf('TextBoxFone2') > 0) {
+                if ((sender.selectionStart == 0) && (sender.value.length == 0) && ((keyCode === 8))) {
+                    tbp1.focus();
+                    tbp1.selectionStart = tbp1.selectionEnd = tbp1.value.length;
+                }
+            } else if (sender.id.indexOf('TextBoxFone3') > 0) {
+                if ((sender.selectionStart == 0) && (sender.value.length == 0) && ((keyCode === 8))) {
+                    tbp2.focus();
+                    tbp2.selectionStart = tbp2.selectionEnd = tbp2.value.length;
+                }
+            }
+        }
+
+        function PhoneKeyUp(sender, event) {
+            var keyCode = (event.which) ? event.which : (window.event.keyCode) ? window.event.keyCode : -1;
+
+            var tbp1 = document.getElementById('ctl00_MiddleSection_TextBoxFone1');
+            var tbp2 = document.getElementById('ctl00_MiddleSection_TextBoxFone2');
+            var tbp3 = document.getElementById('ctl00_MiddleSection_TextBoxFone3');
+
+            if (tbp1.value.match(/[a-z]/i)) {
+                document.getElementById('ctl00_MiddleSection_TextBoxPhone').value = tbp1.value;
+                document.getElementById('sPhone').style.display = 'none';
+                document.getElementById('ctl00_MiddleSection_TextBoxFone1').style.width = '125px';
+                document.getElementById('ctl00_MiddleSection_TextBoxFone1').maxLength = '10';
+
+                $('#ctl00_MiddleSection_CheckBoxSMS').prop('checked', false);
+                $('#ctl00_MiddleSection_CheckBoxSMS').prop('disabled', true);
+                $('#ctl00_MiddleSection_LabelSMS').css('color', 'lightgray');
+
+                if (document.getElementById('ctl00_MiddleSection_TextBoxPhone').value.length != 10) {
+                    document.getElementById('ctl00_MiddleSection_LabelPhone').innerHTML = '';
+                    document.getElementById('ctl00_MiddleSection_ListBoxDOAddress').innerHTML = '';
+                    document.getElementById('ctl00_MiddleSection_ListBoxPUAddress').innerHTML = '';
+                    document.getElementById('ctl00_MiddleSection_LabelPhoneCount').style.display = 'none';
+                }
+
+                return true;
+            } else {
+                document.getElementById('sPhone').style.display = '';
+                document.getElementById('ctl00_MiddleSection_TextBoxFone1').style.width = '28px';
+                document.getElementById('ctl00_MiddleSection_TextBoxFone1').maxLength = '3';
+
+                $('#ctl00_MiddleSection_CheckBoxSMS').prop('disabled', false);
+                $('#ctl00_MiddleSection_LabelSMS').css('color', 'black');
+            }
+
+            if ((event.shiftKey) || (event.ctrlKey)) {
+                return false;
+            }
+
+            if ((keyCode != 8) && (keyCode != 46) && ((keyCode < 48) || (keyCode > 57)) && ((keyCode < 96) || (keyCode > 105))) {
+                return false;
+            }
+
+            document.getElementById('ctl00_MiddleSection_TextBoxPhone').value = tbp1.value + tbp2.value + tbp3.value;
+
+            if (document.getElementById('ctl00_MiddleSection_TextBoxPhone').value.length != 10) {
+                document.getElementById('ctl00_MiddleSection_LabelPhone').innerHTML = '';
+                document.getElementById('ctl00_MiddleSection_ListBoxDOAddress').innerHTML = '';
+                document.getElementById('ctl00_MiddleSection_ListBoxPUAddress').innerHTML = '';
+                document.getElementById('ctl00_MiddleSection_LabelPhoneCount').style.display = 'none';
+            }
+
+            if ((sender.id.indexOf('TextBoxFone1') > 0) && (sender.selectionStart == 3)) {
+                tbp2.focus();
+                tbp2.selectionStart = 0;
+                tbp2.selectionEnd = tbp2.value.length;
+            } else if ((sender.id.indexOf('TextBoxFone2') > 0) && (sender.selectionStart == 3)) {
+                tbp3.focus();
+                tbp3.selectionStart = 0;
+                tbp3.selectionEnd = tbp3.value.length;
+            } else if ((sender.id.indexOf('TextBoxFone3') > 0) && (sender.selectionStart == 4)) {
+                if (document.getElementById('ctl00_MiddleSection_TextBoxPhone').value.length == 10) {
+                    document.getElementById('ctl00_MiddleSection_TextBoxName').focus();
+                }
+            }
+        }
+
+        function PhoneBlur(sender) {
+            var tbp1 = document.getElementById('ctl00_MiddleSection_TextBoxFone1');
+            var tbp2 = document.getElementById('ctl00_MiddleSection_TextBoxFone2');
+            var tbp3 = document.getElementById('ctl00_MiddleSection_TextBoxFone3');
+            var tbp = document.getElementById('ctl00_MiddleSection_TextBoxPhone');
+            var tblp = document.getElementById('ctl00_MiddleSection_TextBoxLastPhone');
+            var lp = document.getElementById('ctl00_MiddleSection_LabelPhone');
+
+            tbp.value = tbp1.value + tbp2.value + tbp3.value;
+
+            if (tbp1.value.match(/[a-zA-Z]/i)) {
+                lp.innerHTML = '';
+                tblp = tbp.value;
+                lastPUAddress = undefined;
+                __doPostBack('ctl00_MiddleSection_TextBoxPhone', 'TextChanged');
+                return;
+            }
+
+            var txt = '<span style="color: red; font-weight: bold;">';
+            if ((tbp.value.length > 0) && (tbp.value.length < 10)) {
+                txt = txt + '*Phone Number not valid!';
+            } else {
+                var obj = document.getElementById('ctl00_MiddleSection_LabelResStatus');
+                if (obj != null) {
+                    txt = txt + '*Required';
+                }
+            }
+            txt = txt + '</span>'
+
+            if (tbp.value != tblp) {
+                document.getElementById('ctl00_MiddleSection_ListBoxDOAddress').innerHTML = '';
+                document.getElementById('ctl00_MiddleSection_ListBoxPUAddress').innerHTML = '';
+                document.getElementById('ctl00_MiddleSection_LabelPhoneCount').style.display = 'none';
+            }
+
+            if ((tbp.value.length == 10) && (!(($('#ctl00_MiddleSection_TextBoxFone1').is(':active')) || ($('#ctl00_MiddleSection_TextBoxFone2').is(':active')) || ($('#ctl00_MiddleSection_TextBoxFone3').is(':active'))))) {
+                lp.innerHTML = txt;
+                tblp = tbp.value;
+            }
+
+            if (sender.id == tbp3.id) {
+                if ((sender.value.length < 4) && ((tbp1.value.length < 3) || (tbp2.value.length < 3))) {
+                    lp.innerHTML = txt;
+                    tblp = tbp.value;
+                } else if (tbp.value.length == 10) {
+                    __doPostBack('ctl00_MiddleSection_TextBoxPhone', 'TextChanged');
+                }
+            }
+
+            if ((tbp.value != tblp) && (tbp.value.length == 10)) {
+                __doPostBack('ctl00_MiddleSection_TextBoxPhone', 'TextChanged');
+            }
+
+            if (tbp.value != tblp) {
+                lp.innerHTML = '';
+                tblp = tbp.value;
+            }
+        }
+
+        function ClientButtonSubmit(sender) {
+            $('#' + sender.id).prop('disabled', 'disabled');
+            $('#' + sender.id).css('background-color', 'lightgray');
+            $('#' + sender.id).css('color', 'gray');
+            $('#' + sender.id).val('Saving...');
+
+            return true;
+        }
+
+        function PUDateKeyDown(sender, event) {
+            var keyCode = (event.which) ? event.which : (window.event.keyCode) ? window.event.keyCode : -1;
+            //alert("test");
+        }
+
+        function phoneInfo(_code, _name, _phone, _address, _lat, _lng, _notes) {
+            this.getCode = function () { return (_code) };
+            this.getName = function () { return (_name) };
+            this.getPhone = function () { return (_phone) };
+            this.getAddress = function () { return (_address) };
+            this.getLat = function () { return (_lat) };
+            this.getLng = function () { return (_lng) };
+            this.getNotes = function () { return (_notes) };
+        }
+
+        function setupPhoneBook(result) {
+            phoneBook = [];
+            if (result.length > 1) {
+                var info = result.split("|||");
+                if (info.length > 0) {
+                    for (i = 0; i < info.length; i++) {
+                        var _i = info[i].split("■");
+                        if (_i.length == 7) {
+                            phoneBook.push(new phoneInfo(_i[0], _i[1], _i[2], _i[3], _i[4], _i[5], _i[6]));
+                        }
+                    }
+                }
+
+                if (phoneBook.length > 0) {
+                    $('#btnPhoneBook').css('display', '');
+                }
+            } else {
+                $('#btnPhoneBook').css('display', 'none');
+            }
+
+            fillPhoneBook();
+        }
+
+        function showHidePhoneBook() {
+            var pb = $('#divPhoneBook');
+            if (pb.css('display') == 'none') {
+                pb.css('display', '');
+            } else {
+                pb.css('display', 'none');
+            }
+
+            document.getElementById('selectPhoneBook').selectedIndex = -1;
+
+            return false;
+        }
+
+        function hidePhoneBook() {
+            var pb = $('#divPhoneBook');
+            if (pb.css('display') != 'none') {
+                pb.css('display', 'none');
+            }
+            document.getElementById('selectPhoneBook').selectedIndex = -1;
+        }
+
+        function fillPhoneBook() {
+            selectPhoneBook = document.getElementById('selectPhoneBook');
+            while (selectPhoneBook.options.length > 1) {
+                selectPhoneBook.remove(1);
+            }
+
+            var tmpAry = new Array();
+            var t = 0;
+
+            for (var j = 0; j < phoneBook.length; j++) {
+                tmpAry[t] = new Array();
+                tmpAry[t][0] = j;
+                tmpAry[t][1] = phoneBook[j].getPhone();
+                tmpAry[t][2] = phoneBook[j].getCode();
+                tmpAry[t][3] = phoneBook[j].getName();
+                tmpAry[t][4] = phoneBook[j].getAddress();
+                t++;
+            }
+
+            tmpAry.sort(function (a, b) { if (a[2] < b[2]) return -1; if (a[2] > b[2]) return 1; return 0; });
+
+            for (var i = 0; i < tmpAry.length; i++) {
+                var op = new Option(tmpAry[i][1] + ' [' + tmpAry[i][2] + ']', tmpAry[i][0]);
+                op.title = tmpAry[i][3];
+                if (tmpAry[i][4].length) {
+                    op.title += ' (' + tmpAry[i][4] + ')';
+                }
+                selectPhoneBook.options.add(op);
+            }
+
+            //$('#divPhoneBook').css('height', (selectPhoneBook.length * 18) + 'px');
+            var len = selectPhoneBook.length;
+            if (len == 1) {
+                len = 2;
+            }
+
+            $('#selectPhoneBook').prop('size', Math.min(25, len));
+        }
+
+        function selectPhoneBookChanged(sender) {
+            var pText = phoneBook[sender.value].getPhone();
+
+            pText = pText.replace(/\D/g, '');
+
+            if ((pText.length == 11) && (pText.substr(0, 1) == '1')) {
+                pText = pText.substr(1, 10);
+            }
+
+            if (pText.length == 10) {
+                document.getElementById('ctl00_MiddleSection_TextBoxFone1').value = phoneBook[sender.value].getCode();
+                document.getElementById('ctl00_MiddleSection_TextBoxPhone').value = document.getElementById('ctl00_MiddleSection_TextBoxFone1').value
+
+
+
+                lastPUAddress = undefined;
+
+                var tbn = document.getElementById('ctl00_MiddleSection_TextBoxName');
+                tbn.focus();
+                tbn.selectionStart = tbn.selectionEnd = tbn.value.length;
+
+                $('#divPhoneBook').css('display', 'none');
+
+                __doPostBack('ctl00_MiddleSection_TextBoxPhone', 'TextChanged');
+            }
+        }
+
+        function setCalendarColor() {
+            $('div.ajax__calendar_container').css('background-color', darkMode ? darkText : lightText);
+            $('div.ajax__calendar_day').css('background-color', darkMode ? darkText : lightText).css('border', '1px solid ' + darkMode ? darkText : lightText);
+            $('div.ajax__calendar_month').css('background-color', darkMode ? darkText : lightText).css('border', '1px solid ' + darkMode ? darkText : lightText);
+            $('div.ajax__calendar_year').css('background-color', darkMode ? darkText : lightText).css('border', '1px solid ' + darkMode ? darkText : lightText);
+        }
+
+        function setAutoCompleteColor(sender) {
+            sender.set_highlightedItemCssClass(darkMode ? 'VehicleAutoCompleteHighlightDark' : 'VehicleAutoCompleteHighlightLight');
+            sender.set_completionListItemCssClass(darkMode ? 'VehicleAutoCompleteItemDark' : 'VehicleAutoCompleteItemLight');
+        }
+
+        function changeColors() {
+            var exempt = ['ctl00_MiddleSection_TextBoxPUDate'];
+
+            $.each($(':input'), function (i) {
+                if ($.inArray($(this).prop('id'), exempt) == -1 && ($(this).prop('type') === 'text' || $(this).prop('type') === 'textarea')) {
+                    $(this).css('background-color', darkMode ? darkText : lightText);
+                }
+            });
+
+            var other = [ 'ctl00_MiddleSection_ListBoxPUAddress',
+                'ctl00_MiddleSection_ListBoxDOAddress',
+                'ctl00_MiddleSection_DropDownListVehicleType',
+                'ctl00_MiddleSection_DropDownListNumOfCars',
+                'ctl00_MiddleSection_DDLRepeatStatus',
+                'selectPhoneBook'];
+
+            $.each(other, function (i, v) {
+                $('#' + v).css('background-color', darkMode ? darkText : lightText);
+            });
+
+            if (map != null) {
+                map.setOptions({ styles: mapStyles[darkMode ? 'dark' : 'light'] });
+            }
+
+            if (mapE != null) {
+                mapE.setOptions({ styles: mapStyles[darkMode ? 'dark' : 'light'] });
+            }
+      }
+    </script>
+
+    <div style="width: 100%">
+        <table style="width: 100%; padding: 0">
+            <tr>
+                <td colspan="3" style="text-align: center;">
+                    <div id="ctl00_MiddleSection_UpdatePanelResStatus">
+	
+                            <br />
+                        
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="innerleft" style="vertical-align: top">
+                    <div id="ctl00_MiddleSection_UpdatePanelLeft">
+	
+                            <table style="padding: 0">
+                                <tr>
+                                    <td style="height: 45px">
+                                        <button id="btnPhoneBook" type="button" onclick="return showHidePhoneBook()" title="Phone Book" style="margin-right: 10px; display: none">PB</button>Phone Number:&nbsp;<span id="ctl00_MiddleSection_LabelPhone"></span><br />
+                                        <div style="position: relative">
+                                            <div id="divPhoneBook" style="position: absolute; top: 0; left: 0; display: none; z-index: 999">
+                                                <select id="selectPhoneBook" ondblclick="selectPhoneBookChanged(this)" style="width: 100%; height: 100%; padding: 2px 4px 2px 4px; border: 2px black solid"></select><br />
+                                            </div>
+                                            <input name="ctl00$MiddleSection$TextBoxFone1" type="text" maxlength="3" id="ctl00_MiddleSection_TextBoxFone1" tabindex="1" OnKeyDown="return PhoneKeyDown(this, event)" OnPaste="return PhonePaste(this, event)" OnKeyUp="return PhoneKeyUp(this, event)" OnBlur="PhoneBlur(this)" style="border-color:LightBlue;width:28px;text-transform: uppercase" /><span id="sPhone">&nbsp;-
+                                            <input name="ctl00$MiddleSection$TextBoxFone2" type="text" maxlength="3" id="ctl00_MiddleSection_TextBoxFone2" tabindex="2" OnKeyDown="return PhoneKeyDown(this, event)" OnPaste="return PhonePaste(this, event)" OnKeyUp="return PhoneKeyUp(this, event)" OnBlur="PhoneBlur(this)" style="border-color:LightBlue;width:28px;" />&nbsp;-
+                                            <input name="ctl00$MiddleSection$TextBoxFone3" type="text" maxlength="4" id="ctl00_MiddleSection_TextBoxFone3" tabindex="3" OnKeyDown="return PhoneKeyDown(this, event)" OnPaste="return PhonePaste(this, event)" OnKeyUp="return PhoneKeyUp(this, event)" OnBlur="PhoneBlur(this)" style="border-color:LightBlue;width:35px;" /></span>&nbsp;&nbsp;&nbsp;
+                                            <input name="ctl00$MiddleSection$TextBoxPhone" type="text" id="ctl00_MiddleSection_TextBoxPhone" style="display: none" />
+                                            <input name="ctl00$MiddleSection$TextBoxLastPhone" type="text" id="ctl00_MiddleSection_TextBoxLastPhone" style="display: none;" />
+                                            &nbsp;&nbsp;<input id="ctl00_MiddleSection_CheckBoxSMS" type="checkbox" name="ctl00$MiddleSection$CheckBoxSMS" checked="checked" tabindex="4" /><span id="ctl00_MiddleSection_LabelSMS">SMS</span>
+                                            &nbsp;&nbsp;
+                                            <span style="float: right">
+                                                <span id="ctl00_MiddleSection_LabelPhoneCount" title="Reservation Phone Count: Today Only / Today and Future" style="display: none"></span>
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 45px">Passenger Name:&nbsp;<span id="ctl00_MiddleSection_LabelName"></span><br />
+                                        <input name="ctl00$MiddleSection$TextBoxName" type="text" maxlength="50" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$MiddleSection$TextBoxName\&#39;,\&#39;\&#39;)&#39;, 0)" onkeypress="if (WebForm_TextBoxKeyHandler(event) == false) return false;" id="ctl00_MiddleSection_TextBoxName" tabindex="5" style="border-color:LightBlue;width:400px;" />
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 45px">Email Address:<br />
+                                        <input name="ctl00$MiddleSection$TextBoxEmailAddress" type="text" maxlength="99" id="ctl00_MiddleSection_TextBoxEmailAddress" tabindex="6" style="border-color:LightBlue;width:400px;" />
+                                        <br />
+                                        <br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 45px">Previous Pick-Up Address List:<br />
+                                        <select size="4" name="ctl00$MiddleSection$ListBoxPUAddress" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$MiddleSection$ListBoxPUAddress\&#39;,\&#39;\&#39;)&#39;, 0)" id="ctl00_MiddleSection_ListBoxPUAddress" tabindex="7" OnBlur="resetPUIndex()" autocomplete="off" style="border-color:LightBlue;width:400px;">
+
+	</select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 45px">
+                                        <span id="spanPUAddress">Pick-Up Address:</span>&nbsp;<span id="ctl00_MiddleSection_LabelPUAddress"></span><br />
+                                        <input style="display: none" type="text" name="fakepuaddress1" /><input style="display: none" type="text" name="fakepuaddress2" />
+                                        <input name="ctl00$MiddleSection$TextBoxPUAddress" id="ctl00_MiddleSection_TextBoxPUAddress" tabindex="8" onfocus="setMarkers(this.id)" OnKeyUp="return setMarkers(this.id)" OnBlur="findPUAddress()" type="text" autocomplete="off" style="border-color:LightBlue;width:400px;" />
+                                        <input name="ctl00$MiddleSection$TextBoxJSONPUAddress" id="ctl00_MiddleSection_TextBoxJSONPUAddress" type="hidden" />
+                                        <input name="ctl00$MiddleSection$TextBoxPULat" value="0.00000" id="ctl00_MiddleSection_TextBoxPULat" type="hidden" />
+                                        <input name="ctl00$MiddleSection$TextBoxPULon" value="0.00000" id="ctl00_MiddleSection_TextBoxPULon" type="hidden" />
+                                        <input name="ctl00$MiddleSection$TextBoxHiddenPUAddress" type="text" id="ctl00_MiddleSection_TextBoxHiddenPUAddress" style="display: none" />
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 45px">Apt #:<br />
+                                        <input name="ctl00$MiddleSection$TextBoxApt" type="text" id="ctl00_MiddleSection_TextBoxApt" tabindex="9" style="border-color:LightBlue;width:200px;" />
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 45px">Pick-Up Zone:<br />
+                                        <input name="ctl00$MiddleSection$TextBoxPUZone" type="text" id="ctl00_MiddleSection_TextBoxPUZone" style="border-color:LightBlue;width:200px;" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 90px">Pick-Up Notes:<br />
+                                        <textarea name="ctl00$MiddleSection$TextBoxPUNotes" rows="3" cols="40" id="ctl00_MiddleSection_TextBoxPUNotes" tabindex="10" style="border-color:LightBlue;width: 400px; resize: none">
+</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 58px">Previous Drop-Off Address List:<br />
+                                        <select size="4" name="ctl00$MiddleSection$ListBoxDOAddress" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$MiddleSection$ListBoxDOAddress\&#39;,\&#39;\&#39;)&#39;, 0)" id="ctl00_MiddleSection_ListBoxDOAddress" tabindex="11" OnBlur="resetDOIndex()" autocomplete="off" style="width:400px;">
+
+	</select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span id="spanDOAddress">Drop-Off Address:</span><br />
+                                        <input style="display: none" type="text" name="fakedoaddress1" /><input style="display: none" type="text" name="fakedoaddress2" />
+                                        <input name="ctl00$MiddleSection$TextBoxDOAddress" id="ctl00_MiddleSection_TextBoxDOAddress" tabindex="12" onfocus="setMarkers(this.id)" OnKeyUp="return setMarkers(this.id)" OnBlur="findDOAddress()" type="text" style="width:400px;" />
+                                        <span id="ctl00_MiddleSection_LabelDistance"></span>
+                                        <input name="ctl00$MiddleSection$TextBoxJSONDOAddress" id="ctl00_MiddleSection_TextBoxJSONDOAddress" type="hidden" />
+                                        <input name="ctl00$MiddleSection$TextBoxDOLat" value="0.00000" id="ctl00_MiddleSection_TextBoxDOLat" type="hidden" />
+                                        <input name="ctl00$MiddleSection$TextBoxDOLon" value="0.00000" id="ctl00_MiddleSection_TextBoxDOLon" type="hidden" />
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 80px"></td>
+                                </tr>
+                            </table>
+                        
+</div>
+                </td>
+                <td class="innermiddle" style="min-width: 450px; vertical-align: top" onmouseover="hidePhoneBook()">
+                    <div id="ctl00_MiddleSection_UpdatePanelRight">
+	
+                            <table style="padding: 0px">
+                                <tr>
+                                    <td style="height: 45px">Pick-Up Date:<br />
+                                        <input name="ctl00$MiddleSection$TextBoxPUDate" type="text" value="3/27/2023" maxlength="10" id="ctl00_MiddleSection_TextBoxPUDate" tabindex="13" readonly="readonly" OnKeyDown="PUDateKeyDown(this, event)" style="background-color:Yellow;width:75px;text-align: center" />
+                                        
+                                        <span id="ctl00_MiddleSection_RFVPUDate" style="color:Red;visibility:hidden;"> * Required Field</span>
+                                        <input type="submit" name="ctl00$MiddleSection$ButtonPUDate" value="" id="ctl00_MiddleSection_ButtonPUDate" style="display: none;" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 45px">Pick-Up Time:&nbsp;&nbsp;<span id="ctl00_MiddleSection_LabelDispatchTime"></span><br />
+                                        <select name="ctl00$MiddleSection$DropDownListHour" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$MiddleSection$DropDownListHour\&#39;,\&#39;\&#39;)&#39;, 0)" id="ctl00_MiddleSection_DropDownListHour" tabindex="14" style="background-color:Yellow;width:42px;direction: rtl">
+		<option value="12">12</option>
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option selected="selected" value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+		<option value="8">8</option>
+		<option value="9">9</option>
+		<option value="10">10</option>
+		<option value="11">11</option>
+
+	</select>:<select name="ctl00$MiddleSection$DropDownListMinute" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$MiddleSection$DropDownListMinute\&#39;,\&#39;\&#39;)&#39;, 0)" id="ctl00_MiddleSection_DropDownListMinute" tabindex="15" style="background-color:Yellow;width:42px;">
+		<option value="00">00</option>
+		<option value="05">05</option>
+		<option value="10">10</option>
+		<option value="15">15</option>
+		<option value="20">20</option>
+		<option value="25">25</option>
+		<option value="30">30</option>
+		<option value="35">35</option>
+		<option value="40">40</option>
+		<option selected="selected" value="45">45</option>
+		<option value="50">50</option>
+		<option value="55">55</option>
+
+	</select>&nbsp;
+                                        <select name="ctl00$MiddleSection$DropDownListAmPm" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$MiddleSection$DropDownListAmPm\&#39;,\&#39;\&#39;)&#39;, 0)" id="ctl00_MiddleSection_DropDownListAmPm" tabindex="16" style="background-color:Yellow;width:45px;">
+		<option value="AM">AM</option>
+		<option selected="selected" value="PM">PM</option>
+
+	</select>&nbsp;&nbsp;
+                                        Dispatch Lead Time:&nbsp;<select name="ctl00$MiddleSection$DropDownListLeadTime" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$MiddleSection$DropDownListLeadTime\&#39;,\&#39;\&#39;)&#39;, 0)" id="ctl00_MiddleSection_DropDownListLeadTime" tabindex="17" style="background-color:Yellow;width:72px;">
+		<option selected="selected" value="0">None</option>
+		<option value="10">10 min.</option>
+		<option value="20">20 min.</option>
+		<option value="30">30 min.</option>
+		<option value="40">40 min.</option>
+		<option value="50">50 min.</option>
+		<option value="60">60 min.</option>
+		<option value="70">70 min.</option>
+		<option value="80">80 min.</option>
+		<option value="90">90 min.</option>
+
+	</select>
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 45px">Passenger Requested Vehicle:<br />
+                                        <input name="ctl00$MiddleSection$TextBoxReqVehicle" type="text" maxlength="15" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$MiddleSection$TextBoxReqVehicle\&#39;,\&#39;\&#39;)&#39;, 0)" onkeypress="if (WebForm_TextBoxKeyHandler(event) == false) return false;" id="ctl00_MiddleSection_TextBoxReqVehicle" tabindex="18" style="width:80px;text-transform: uppercase" />&nbsp;&nbsp;
+                                        <br />
+                                        
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 45px">Vehicle Type:<br />
+                                        <select name="ctl00$MiddleSection$DropDownListVehicleType" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$MiddleSection$DropDownListVehicleType\&#39;,\&#39;\&#39;)&#39;, 0)" id="ctl00_MiddleSection_DropDownListVehicleType" tabindex="19">
+
+	</select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 45px">
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td style="height: 45px">Number of cars:<br />
+                                                    <select name="ctl00$MiddleSection$DropDownListNumOfCars" id="ctl00_MiddleSection_DropDownListNumOfCars" tabindex="20">
+		<option selected="selected" value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+
+	</select>
+                                                </td>
+                                                <td style="height: 45px">Repeat Reservation:<br />
+                                                    <select name="ctl00$MiddleSection$DDLRepeatStatus" id="ctl00_MiddleSection_DDLRepeatStatus">
+		<option value="">Not Repeating</option>
+		<option value="5">Every Weekday</option>
+		<option value="W">Weekly</option>
+
+	</select>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height: 45px">Payment&nbsp;Type:&nbsp;<br />
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Dispatch&nbsp;Notes:&nbsp;(200&nbsp;chars&nbsp;max)<br />
+                                        <textarea name="ctl00$MiddleSection$TextBoxDispatchNotes" rows="3" cols="40" id="ctl00_MiddleSection_TextBoxDispatchNotes" tabindex="22" style="width: 400px; resize: none;">
+</textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                        
+</div>
+                </td>
+                <td class="innerright" style="width: 410px" onmouseover="hidePhoneBook()">
+                    <table style="padding: 0">
+                        <tr style="height: 295px; width: 410px">
+                            <td>
+                                <div id="map_canvas" style="width: 400px; height: 295px"></div>
+                            </td>
+                        </tr>
+                        <tr style="height: 20px">
+                            <td>
+                                <div id="dEstimate" style="visibility: hidden">
+                                    <input type="button" name="ctl00$MiddleSection$ButtonEstimate" value="Get Trip Estimates &amp; Route" onclick="calculateDistances(); return false;__doPostBack(&#39;ctl00$MiddleSection$ButtonEstimate&#39;,&#39;&#39;)" id="ctl00_MiddleSection_ButtonEstimate" tabindex="23" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 25px">
+                            <td>
+                                <div id="fare"></div>
+                            </td>
+                        </tr>
+                        <tr style="height: 295px; width: 410px;">
+                            <td>
+                                <div id="mapEstimate" style="width: 400px; height: 295px"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div id="ctl00_MiddleSection_upButtons" onmouseover="hidePhoneBook()">
+	
+                <div style="text-align: center; padding-bottom: 10px">
+                    <input type="button" name="ctl00$MiddleSection$ButtonSave" value="Save Reservation" onclick="if (!ClientButtonSubmit(this)) { return false; };__doPostBack(&#39;ctl00$MiddleSection$ButtonSave&#39;,&#39;&#39;)" id="ctl00_MiddleSection_ButtonSave" tabindex="24" class="Buttons" onmouseover="saveFocus(this)" style="color:White;background-color:Green;height:25px;" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="ctl00$MiddleSection$ButtonCancel" value="Cancel" onclick="javascript:__doPostBack(&#39;ctl00$MiddleSection$ButtonCancel&#39;,&#39;&#39;)" id="ctl00_MiddleSection_ButtonCancel" tabindex="25" class="Buttons" style="color:White;background-color:Red;height:25px;" />
+                </div>
+
+                
+                <input type="hidden" name="ctl00$MiddleSection$HiddenFieldInfo" id="ctl00_MiddleSection_HiddenFieldInfo" />
+
+                <div id="ctl00_MiddleSection_PanelInfo" style="background-color:#EEEEFF;width:300px;display: none">
+		
+                    <div style="position: relative; width: 100%">
+                        <div id="ctl00_MiddleSection_divInfo">
+                            <span id="ctl00_MiddleSection_LabelInfo"></span>
+                        </div>
+                        <div style="text-align: center">
+                            <input type="button" name="ctl00$MiddleSection$ButtonForceSave" value="Save Anyway" onclick="if (!ClientButtonSubmit(this)) { return false; };__doPostBack(&#39;ctl00$MiddleSection$ButtonForceSave&#39;,&#39;&#39;)" id="ctl00_MiddleSection_ButtonForceSave" class="Buttons" style="color:White;background-color:Red;height:25px;" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="ctl00$MiddleSection$ButtonReturnEdit" value="Return To Edit" onclick="javascript:__doPostBack(&#39;ctl00$MiddleSection$ButtonReturnEdit&#39;,&#39;&#39;)" id="ctl00_MiddleSection_ButtonReturnEdit" class="Buttons" style="color:White;background-color:Green;height:25px;" />
+                        </div>
+                    </div>
+                
+	</div>
+            
+</div>
+    </div>
+
+                    </div>
+                    <div id="bottomsection">
+                        
+                    </div>
+                </div>
+            </div>
+            <div id="versionfooter">
+                <div style="position: absolute; left: 5px; top: 1px">
+                    <label id="labelClock"></label>
+                    <span id="ctl00_LabelResolution" style="padding-left: 20px; display: none"></span>
+                </div>
+                <div style="position: absolute; right: 5px; top: 1px">
+                    <span id="ctl00_LabelBuild">TT-WS4_221010145219</span>
+                </div>
+                <div style="position: absolute; width: calc(100% - 2px); text-align: center; top: 1px">
+                    <span id="ctl00_LabelInfo">Copyright© 2022 TaxiRide - TaxiRide is a registered trademark of Special Systems, Inc.</span>
+                </div>
+            </div>
+        </div>
+    
+<script type="text/javascript">
+//<![CDATA[
+var Page_Validators =  new Array(document.getElementById("ctl00_MiddleSection_RFVPUDate"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var ctl00_MiddleSection_RFVPUDate = document.all ? document.all["ctl00_MiddleSection_RFVPUDate"] : document.getElementById("ctl00_MiddleSection_RFVPUDate");
+ctl00_MiddleSection_RFVPUDate.controltovalidate = "ctl00_MiddleSection_TextBoxPUDate";
+ctl00_MiddleSection_RFVPUDate.validationGroup = "vInput";
+ctl00_MiddleSection_RFVPUDate.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_MiddleSection_RFVPUDate.initialvalue = "";
+//]]>
+</script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        WebForm_AutoFocus('ctl00_MiddleSection_TextBoxFone1');Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.AutoCompleteBehavior, {"completionInterval":100,"completionListCssClass":"VehicleAutoComplete","completionListItemCssClass":"VehicleAutoCompleteItemLight","delimiterCharacters":"","enableCaching":false,"highlightedItemCssClass":"VehicleAutoCompleteHighlightLight","id":"ctl00_MiddleSection_ACETextBoxPUAddress","minimumPrefixLength":1,"serviceMethod":"AutocompleteAddres","servicePath":"/Createres.aspx"}, {"hidden":PUAddressACCount,"itemSelected":selectedPUAddress,"populating":setAutoCompleteColor,"shown":PUAddressACCount}, null, $get("ctl00_MiddleSection_TextBoxPUAddress"));
+});
+Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.AutoCompleteBehavior, {"completionInterval":100,"completionListCssClass":"VehicleAutoComplete","completionListItemCssClass":"VehicleAutoCompleteItemLight","delimiterCharacters":"","enableCaching":false,"highlightedItemCssClass":"VehicleAutoCompleteHighlightLight","id":"ctl00_MiddleSection_ACETextBoxDOAddress","minimumPrefixLength":1,"serviceMethod":"AutocompleteAddres","servicePath":"/Createres.aspx"}, {"hidden":DOAddressACCount,"itemSelected":selectedDOAddress,"populating":setAutoCompleteColor,"shown":DOAddressACCount}, null, $get("ctl00_MiddleSection_TextBoxDOAddress"));
+});
+Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.CalendarBehavior, {"endDate":"2023-09-23T00:00:00","id":"ctl00_MiddleSection_CalendarExtenderPUDate","popupPosition":5,"startDate":"2023-03-27T00:00:00"}, {"dateSelectionChanged":testPUDate,"showing":setCalendarColor}, null, $get("ctl00_MiddleSection_TextBoxPUDate"));
+});
+
+document.getElementById('ctl00_MiddleSection_RFVPUDate').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('ctl00_MiddleSection_RFVPUDate'));
+}
+Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.FilteredTextBoxBehavior, {"filterType":14,"id":"ctl00_MiddleSection_FTBETextBoxReqVehicle"}, null, null, $get("ctl00_MiddleSection_TextBoxReqVehicle"));
+});
+Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.AutoCompleteBehavior, {"completionInterval":100,"completionListCssClass":"VehicleAutoComplete","completionListItemCssClass":"VehicleAutoCompleteItemLight","completionSetCount":200,"delimiterCharacters":"","enableCaching":false,"highlightedItemCssClass":"VehicleAutoCompleteHighlightLight","id":"ctl00_MiddleSection_ACETextBoxReqVehicle","minimumPrefixLength":1,"serviceMethod":"AutocompleteVID","servicePath":"/Createres.aspx"}, {"populating":setAutoCompleteColor}, null, $get("ctl00_MiddleSection_TextBoxReqVehicle"));
+});
+Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"backgroundCssClass":"modalBackground","dropShadow":true,"dynamicServicePath":"/Createres.aspx","id":"ctl00_MiddleSection_MPEInfo","popupControlID":"ctl00_MiddleSection_PanelInfo"}, null, null, $get("ctl00_MiddleSection_HiddenFieldInfo"));
+});
+//]]>
+</script>
+</form>
+</body>
+</html>
